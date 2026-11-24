@@ -11,7 +11,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@1,6..72,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;700&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@1,6..72,600&display=swap" rel="stylesheet">
 <!-- intro: only the letters "ideas" are downloaded from these -->
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Rubik+Bubbles&family=Rubik+Moonrocks&family=Rubik+Puddles&family=Monoton&family=Syne:wght@800&family=Bodoni+Moda:ital,wght@1,700&family=Silkscreen&family=Fraunces:ital,wght@1,900&family=Instrument+Serif:ital@1&text=ideas&display=block" rel="stylesheet">
 <style>
@@ -56,25 +56,22 @@
 
   /* content */
   main{padding:calc(102px + clamp(28px,5vw,56px)) var(--pad) 0}
-  .ww{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(20px,2.6vw,40px);align-items:start;margin-top:clamp(28px,5vh,56px);border-top:1px solid var(--ink);padding-top:18px}
-  .we{position:sticky;top:96px;margin:0;padding-top:.24em;font-weight:700;font-size:clamp(34px,5.2vw,76px);letter-spacing:-.055em;line-height:1.04;white-space:nowrap}
+  .ww{display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:clamp(16px,4vh,48px)}
+  .we{margin:0 0 clamp(14px,2.4vw,32px);font-weight:300;font-size:clamp(44px,6.2vw,90px);letter-spacing:-.04em;line-height:1.04;white-space:nowrap;color:var(--blue)}
   .rot{display:inline-grid;vertical-align:baseline;margin-left:.16em;clip-path:inset(-.08em -.4em -.24em -.12em)}
   .set{display:inline-grid}
-  .set i{grid-area:1/1;font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.03em;color:var(--blue);opacity:0;transform:translateY(32%);transition:opacity .4s cubic-bezier(.2,.7,.2,1) .12s,transform .55s cubic-bezier(.2,.7,.2,1) .12s}
+  .set i{grid-area:1/1;text-align:left;font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.03em;color:var(--blue);opacity:0;transform:translateY(32%);transition:opacity .4s cubic-bezier(.2,.7,.2,1) .12s,transform .55s cubic-bezier(.2,.7,.2,1) .12s}
   .set i.on{opacity:1;transform:none}
   .set i.out{opacity:0;transform:translateY(-32%);transition:opacity .18s ease-out,transform .3s ease-in}
   .services{list-style:none;margin:0;padding:0}
-  .services li{border-bottom:1px solid var(--line)}
-  .services a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:6px 0;text-decoration:none}
-  .services .w{display:inline-grid;font-weight:700;font-size:clamp(38px,8vw,116px);line-height:1.04;letter-spacing:-.055em}
+  .services a{display:block;padding:2px 0;text-decoration:none}
+  .services .w{display:inline-grid;font-weight:700;font-size:clamp(40px,8.4vw,150px);line-height:1.04;letter-spacing:-.055em}
   .services .w>span{grid-area:1/1;transition:opacity .7s cubic-bezier(.2,.7,.2,1),filter .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
   .services .w>span::after{content:".";color:var(--blue)}
   .services .w .b{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.035em;color:var(--blue);opacity:0;filter:blur(8px);transform:translateY(10px)}
   .services li.alt .w .a,.services a:hover .w .a{opacity:0;filter:blur(8px);transform:translateY(-10px)}
   .services li.alt .w .b,.services a:hover .w .b{opacity:1;filter:none;transform:none}
-  .services .arr{font-size:clamp(20px,2.4vw,36px);opacity:0;transform:translateX(-10px);transition:opacity .3s,transform .3s}
-  .services a:hover .arr{opacity:1;transform:none}
-  @media (max-width:760px){.ww{grid-template-columns:1fr;row-gap:14px}.we{position:static;font-size:clamp(44px,12vw,64px)}}
+  @media (max-width:760px){.we{font-size:clamp(40px,11vw,60px)}}
 
   footer{padding:clamp(48px,8vw,96px) var(--pad) 40px;display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
   footer .tag{font-size:clamp(20px,2vw,26px);font-weight:500;line-height:1.25}
@@ -95,12 +92,12 @@
   <section class="ww" id="what" aria-label="Services">
     <h2 class="we rv" style="--i:1"><span data-l="en">We</span><span data-l="tr">Biz</span><span class="rot"><span class="set" data-l="en"><i class="on">handle</i><i>deliver</i><i>serve</i><i>help</i></span><span class="set" data-l="tr"><i class="on">hallederiz</i><i>sunarız</i><i>yaparız</i><i>büyütürüz</i></span></span></h2>
     <ul class="services">
-      <li class="rv" style="--i:2"><a href="brand-strategy.html"><span class="w"><span class="a"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></span><span class="b" aria-hidden="true"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></span></span><span class="arr" aria-hidden="true">→</span></a></li>
-      <li class="rv" style="--i:3"><a href="identity.html"><span class="w"><span class="a"><span data-l="tr">Kimlik</span><span data-l="en">Identity</span></span><span class="b" aria-hidden="true"><span data-l="tr">Kimlik</span><span data-l="en">Identity</span></span></span><span class="arr" aria-hidden="true">→</span></a></li>
-      <li class="rv" style="--i:4"><a href="websites.html"><span class="w"><span class="a"><span data-l="tr">Web siteleri</span><span data-l="en">Websites</span></span><span class="b" aria-hidden="true"><span data-l="tr">Web siteleri</span><span data-l="en">Websites</span></span></span><span class="arr" aria-hidden="true">→</span></a></li>
-      <li class="rv" style="--i:5"><a href="social-media.html"><span class="w"><span class="a"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></span><span class="b" aria-hidden="true"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></span></span><span class="arr" aria-hidden="true">→</span></a></li>
-      <li class="rv" style="--i:6"><a href="ai-visibility.html"><span class="w"><span class="a"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span><span class="b" aria-hidden="true"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span></span><span class="arr" aria-hidden="true">→</span></a></li>
-      <li class="rv" style="--i:7"><a href="lead-generation.html"><span class="w"><span class="a">Lead generation</span><span class="b" aria-hidden="true">Lead generation</span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:2"><a href="brand-strategy.html"><span class="w"><span class="a"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></span><span class="b" aria-hidden="true"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></span></span></a></li>
+      <li class="rv" style="--i:3"><a href="identity.html"><span class="w"><span class="a"><span data-l="tr">Kimlik</span><span data-l="en">Identity</span></span><span class="b" aria-hidden="true"><span data-l="tr">Kimlik</span><span data-l="en">Identity</span></span></span></a></li>
+      <li class="rv" style="--i:4"><a href="websites.html"><span class="w"><span class="a"><span data-l="tr">Web siteleri</span><span data-l="en">Websites</span></span><span class="b" aria-hidden="true"><span data-l="tr">Web siteleri</span><span data-l="en">Websites</span></span></span></a></li>
+      <li class="rv" style="--i:5"><a href="social-media.html"><span class="w"><span class="a"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></span><span class="b" aria-hidden="true"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></span></span></a></li>
+      <li class="rv" style="--i:6"><a href="ai-visibility.html"><span class="w"><span class="a"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span><span class="b" aria-hidden="true"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span></span></a></li>
+      <li class="rv" style="--i:7"><a href="lead-generation.html"><span class="w"><span class="a">Lead generation</span><span class="b" aria-hidden="true">Lead generation</span></span></a></li>
     </ul>
   </section>
 </main>
