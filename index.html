@@ -58,9 +58,9 @@
   .we{position:sticky;top:96px;margin:0;padding-top:.24em;font-weight:700;font-size:clamp(34px,5.2vw,76px);letter-spacing:-.055em;line-height:1.04;white-space:nowrap}
   .rot{display:inline-grid;vertical-align:baseline;margin-left:.16em;clip-path:inset(-.08em -.4em -.24em -.12em)}
   .set{display:inline-grid}
-  .set i{grid-area:1/1;font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.03em;color:var(--blue);opacity:0;transform:translateY(70%);transition:opacity .45s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1)}
+  .set i{grid-area:1/1;font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.03em;color:var(--blue);opacity:0;transform:translateY(32%);transition:opacity .4s cubic-bezier(.2,.7,.2,1) .12s,transform .55s cubic-bezier(.2,.7,.2,1) .12s}
   .set i.on{opacity:1;transform:none}
-  .set i.out{opacity:0;transform:translateY(-70%)}
+  .set i.out{opacity:0;transform:translateY(-32%);transition:opacity .18s ease-out,transform .3s ease-in}
   .services{list-style:none;margin:0;padding:0}
   .services li{border-bottom:1px solid var(--line)}
   .services a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:6px 0;text-decoration:none}
