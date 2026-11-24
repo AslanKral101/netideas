@@ -50,25 +50,22 @@
   main{padding:calc(72px + clamp(28px,5vw,56px)) var(--pad) 0}
   .lead{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted)}
   .lead b{color:var(--blue);font-weight:500}
-  .wwd{margin:clamp(48px,9vh,110px) 0 clamp(16px,2.4vw,28px);font-weight:500;font-size:clamp(30px,4.2vw,60px);letter-spacing:-.035em;line-height:1.1;display:flex;align-items:baseline;gap:.08em}
-  .wwd .it{font-weight:600;letter-spacing:-.02em}
-  .wwd .txt{display:inline-block;white-space:nowrap;clip-path:inset(-10% 100% -20% 0)}
-  .wwd .cur{display:inline-block;width:.5em;height:.08em;background:var(--blue);opacity:0}
-  html.ready .wwd .txt{animation:type .75s .1s steps(12,end) forwards}
-  html.ready .wwd .cur{animation:blink 1s .1s steps(1,end) 6 forwards}
-  @keyframes type{to{clip-path:inset(-10% -5% -20% 0)}}
-  @keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}
-
+  .ww{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(20px,2.6vw,40px);align-items:start;margin-top:clamp(28px,5vh,56px);border-top:1px solid var(--ink);padding-top:18px}
+  .we{position:sticky;top:96px;margin:0;font-weight:700;font-size:clamp(34px,6.6vw,100px);letter-spacing:-.055em;line-height:1.04;white-space:nowrap}
+  .rot{display:inline-grid;vertical-align:bottom;overflow:hidden;padding:0 .06em .14em 0;margin-bottom:-.14em}
+  .set{display:inline-grid}
+  .set i{grid-area:1/1;font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.03em;color:var(--blue);opacity:0;transform:translateY(70%);transition:opacity .45s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1)}
+  .set i.on{opacity:1;transform:none}
+  .set i.out{opacity:0;transform:translateY(-70%)}
   .services{list-style:none;margin:0;padding:0}
-  .services li{border-top:1px solid var(--line)}
-  .services li:last-child{border-bottom:1px solid var(--line)}
-  .services a{display:grid;grid-template-columns:clamp(36px,6vw,96px) 1fr auto;align-items:baseline;gap:12px;padding:clamp(6px,1.2vw,14px) 0;text-decoration:none}
-  .services .n{color:var(--muted);transition:color .3s}
-  .services .w{font-weight:700;font-size:clamp(42px,10.4vw,176px);line-height:.98;letter-spacing:-.055em;transition:color .35s}
+  .services li{border-bottom:1px solid var(--line)}
+  .services a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:6px 0;text-decoration:none}
+  .services .w{font-weight:700;font-size:clamp(34px,6.6vw,100px);line-height:1.04;letter-spacing:-.055em;transition:color .35s}
+  .services .w::after{content:".";color:var(--blue)}
   .services .arr{font-size:clamp(20px,2.4vw,36px);opacity:0;transform:translateX(-10px);transition:opacity .3s,transform .3s}
   .services a:hover .w{color:var(--blue);font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.035em}
-  .services a:hover .n{color:var(--blue)}
   .services a:hover .arr{opacity:1;transform:none}
+  @media (max-width:760px){.ww{grid-template-columns:1fr;row-gap:14px}.we{position:static;font-size:clamp(44px,12vw,64px)}}
 
   footer{padding:clamp(48px,8vw,96px) var(--pad) 40px;display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
   footer .tag{font-size:clamp(20px,2vw,26px);font-weight:500;line-height:1.25}
@@ -79,7 +76,7 @@
   .rv{opacity:0;transform:translateY(26px)}
   html.ready .rv{opacity:1;transform:none;transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i,0) * 110ms)}
   a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-  @media (prefers-reduced-motion:reduce){.rv,html.ready .rv{opacity:1;transform:none;transition:none}.wwd .txt{clip-path:none}html.ready .wwd .txt,html.ready .wwd .cur{animation:none}}
+  @media (prefers-reduced-motion:reduce){.rv,html.ready .rv{opacity:1;transform:none;transition:none}.set i{transition:none}}
 </style>
 </head>
 <body>
@@ -90,18 +87,17 @@
     <span>Istanbul — Global</span>
   </div>
 
-  <h1 class="wwd" id="what">
-    <span class="txt"><span data-l="en">What <span class="it">we do</span></span><span data-l="tr">Ne <span class="it">yapıyoruz</span></span></span><span class="cur" aria-hidden="true"></span>
-  </h1>
-
-  <ul class="services">
-    <li class="rv" style="--i:2"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="n mono">01_</span><span class="w"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></span><span class="arr" aria-hidden="true">→</span></a></li>
-    <li class="rv" style="--i:3"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="n mono">02_</span><span class="w"><span data-l="tr">Kimlik</span><span data-l="en">Identity</span></span><span class="arr" aria-hidden="true">→</span></a></li>
-    <li class="rv" style="--i:4"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="n mono">03_</span><span class="w"><span data-l="tr">Web siteleri</span><span data-l="en">Websites</span></span><span class="arr" aria-hidden="true">→</span></a></li>
-    <li class="rv" style="--i:5"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="n mono">04_</span><span class="w"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></span><span class="arr" aria-hidden="true">→</span></a></li>
-    <li class="rv" style="--i:6"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="n mono">05_</span><span class="w"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span><span class="arr" aria-hidden="true">→</span></a></li>
-    <li class="rv" style="--i:7"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="n mono">06_</span><span class="w">Lead generation</span><span class="arr" aria-hidden="true">→</span></a></li>
-  </ul>
+  <section class="ww" id="what" aria-label="Services">
+    <h2 class="we rv" style="--i:1"><span data-l="en">We</span><span data-l="tr">Biz</span> <span class="rot"><span class="set" data-l="en"><i class="on">handle</i><i>deliver</i><i>serve</i><i>help</i></span><span class="set" data-l="tr"><i class="on">hallederiz</i><i>sunarız</i><i>yaparız</i><i>büyütürüz</i></span></span></h2>
+    <ul class="services">
+      <li class="rv" style="--i:2"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="w"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:3"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="w"><span data-l="tr">Kimlik</span><span data-l="en">Identity</span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:4"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="w"><span data-l="tr">Web siteleri</span><span data-l="en">Websites</span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:5"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="w"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:6"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="w"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:7"><a href="#" class="mail" data-u="aslanoral" data-d="gmail.com"><span class="w">Lead generation</span><span class="arr" aria-hidden="true">→</span></a></li>
+    </ul>
+  </section>
 </main>
 
 <footer class="rv" style="--i:8" id="contact">
@@ -143,7 +139,11 @@
   var NS='http://www.w3.org/2000/svg';
   var logo=document.getElementById('logo'), ideas=logo.querySelector('.ideas'), fx=logo.querySelector('#fx');
   var finished=false;
-  function done(){if(finished)return;finished=true;root.classList.remove('intro');root.classList.add('ready')}
+  function done(){if(finished)return;finished=true;root.classList.remove('intro');root.classList.add('ready');rotate()}
+  function rotate(){
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    setInterval(function(){document.querySelectorAll('.set').forEach(function(set){var w=set.children,k=0;for(var j=0;j<w.length;j++)if(w[j].classList.contains('on'))k=j;for(var j=0;j<w.length;j++)w[j].classList.remove('out');w[k].classList.remove('on');w[k].classList.add('out');w[(k+1)%w.length].classList.add('on')})},1900);
+  }
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce||!logo.animate){done();return}
 
