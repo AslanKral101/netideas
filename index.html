@@ -66,11 +66,11 @@
   .services{list-style:none;margin:0;padding:0}
   .services a{display:block;padding:2px 0;text-decoration:none}
   .services .w{display:inline-grid;font-weight:700;font-size:clamp(40px,8.4vw,150px);line-height:1.04;letter-spacing:-.055em}
-  .services .w>span{grid-area:1/1;transition:opacity .7s cubic-bezier(.2,.7,.2,1),filter .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .services .w>span{grid-area:1/1}
   .services .w>span::after{content:".";color:var(--blue)}
-  .services .w .b{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.035em;color:var(--blue);opacity:0;filter:blur(8px);transform:translateY(10px)}
-  .services li.alt .w .a,.services a:hover .w .a{opacity:0;filter:blur(8px);transform:translateY(-10px)}
-  .services li.alt .w .b,.services a:hover .w .b{opacity:1;filter:none;transform:none}
+  .services .w .b{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.035em;color:var(--blue);opacity:0}
+  .services a:hover .w .a,.services a:focus-visible .w .a{opacity:0}
+  .services a:hover .w .b,.services a:focus-visible .w .b{opacity:1}
   @media (max-width:760px){.we{font-size:clamp(40px,11vw,60px)}}
 
   footer{padding:clamp(48px,8vw,96px) var(--pad) 40px;display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
