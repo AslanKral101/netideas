@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="tr" class="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lead generation — Net Ideas</title>
+<meta name="description" content="Turn attention into real conversations with buyers.">
+<meta property="og:title" content="Lead generation — Net Ideas">
+<meta property="og:description" content="Turn attention into real conversations with buyers.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@1,6..72,500;1,6..72,600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#111111;--blue:#0B3BFF;--muted:#5C5C5C;--line:rgba(17,17,17,.12);--pad:clamp(20px,4.4vw,64px)}
+  *{box-sizing:border-box}
+  body{margin:0;background:#fff;color:var(--ink);font-family:"Inter Tight",system-ui,sans-serif;font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+  a{color:inherit}
+  ::selection{background:var(--blue);color:#fff}
+  html.tr [data-l="en"]{display:none!important}
+  html.en [data-l="tr"]{display:none!important}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:500;font-size:13px;letter-spacing:.02em}
+  .it{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600}
+  header{position:sticky;top:0;z-index:10;height:72px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 var(--pad);background:rgba(255,255,255,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .home{display:block;color:var(--ink)}
+  .logo{display:block;height:28px;width:auto}
+  .tools{display:flex;align-items:center;gap:8px}
+  .pill{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:0 16px;height:44px;min-width:46px;cursor:pointer;text-decoration:none;transition:background .2s,color .2s,border-color .2s}
+  .pill:hover{background:var(--ink);color:#fff}
+  .pill.solid{background:var(--ink);color:#fff}
+  .pill.solid:hover{background:var(--blue);border-color:var(--blue)}
+  main{flex:1;padding:clamp(32px,6vw,72px) var(--pad) 0}
+  .crumb{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted)}
+  .crumb a{text-decoration:none}
+  .crumb a:hover{color:var(--ink)}
+  h1{margin:clamp(36px,7vh,88px) 0 0;font-weight:700;font-size:clamp(52px,11vw,184px);letter-spacing:-.06em;line-height:.95}
+  h1::after{content:".";color:var(--blue)}
+  .line{margin:clamp(20px,3vw,36px) 0 0;max-width:24ch;font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(26px,3.2vw,46px);line-height:1.12;letter-spacing:-.02em}
+  .get{margin-top:clamp(56px,9vh,110px);display:grid;grid-template-columns:clamp(110px,16vw,220px) minmax(0,1fr);column-gap:24px;border-top:1px solid var(--ink);padding-top:16px}
+  .get .mono{color:var(--blue);padding-top:14px}
+  .get ul{list-style:none;margin:0;padding:0}
+  .get li{font-weight:700;font-size:clamp(28px,3.8vw,56px);letter-spacing:-.045em;line-height:1.1;padding:8px 0;border-bottom:1px solid var(--line)}
+  .next{margin-top:clamp(56px,9vh,110px);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+  .next a.big{text-decoration:none;font-weight:700;font-size:clamp(28px,3.8vw,56px);letter-spacing:-.045em;line-height:1.1;display:inline-flex;align-items:baseline;gap:.3em}
+  .next a.big .mono{font-size:13px;letter-spacing:.02em;color:var(--muted)}
+  .next a.big:hover{color:var(--blue)}
+  .cta{height:56px;padding:0 26px;font-size:17px;gap:10px}
+  footer{padding:clamp(48px,8vw,96px) var(--pad) 40px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--muted)}
+  footer a{text-decoration:none;border-bottom:2px solid var(--blue)}
+  footer a:hover{color:var(--blue)}
+  .rv{animation:rv .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 90ms)}
+  @keyframes rv{from{opacity:0;transform:translateY(22px)}}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+  @media (max-width:640px){.get{grid-template-columns:1fr;row-gap:8px}.get .mono{padding-top:0}.logo{height:22px}header{height:64px}}
+  @media (prefers-reduced-motion:reduce){.rv{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="home" href="./" aria-label="Net Ideas"><svg class="logo" viewBox="5 -172 932 194" role="img" aria-label="Net Ideas" xmlns="http://www.w3.org/2000/svg"><path d="M15.40 0.00 L15.40 -110.00 L39.80 -110.00 L39.80 -89.00 L46.60 -89.00 L39.80 -83.20 Q39.80 -96.80 47.70 -104.40 Q55.60 -112.00 69.40 -112.00 Q85.60 -112.00 95.30 -101.20 Q105.00 -90.40 105.00 -72.20 L105.00 0.00 L80.00 0.00 L80.00 -69.60 Q80.00 -79.60 74.80 -85.00 Q69.60 -90.40 60.20 -90.40 Q51.00 -90.40 45.70 -84.80 Q40.40 -79.20 40.40 -68.80 L40.40 0.00Z" fill="currentColor"></path><path d="M176.20 2.00 Q162.20 2.00 151.80 -3.40 Q141.40 -8.80 135.70 -18.50 Q130.00 -28.20 130.00 -41.20 L130.00 -68.80 Q130.00 -81.80 135.70 -91.50 Q141.40 -101.20 151.80 -106.60 Q162.20 -112.00 176.20 -112.00 Q190.00 -112.00 200.30 -106.60 Q210.60 -101.20 216.30 -91.50 Q222.00 -81.80 222.00 -68.80 L222.00 -49.00 L154.20 -49.00 L154.20 -41.20 Q154.20 -29.60 159.80 -23.70 Q165.40 -17.80 176.40 -17.80 Q184.80 -17.80 190.00 -20.70 Q195.20 -23.60 196.60 -29.20 L221.20 -29.20 Q218.40 -15.00 206.10 -6.50 Q193.80 2.00 176.20 2.00Z M197.80 -63.00 L197.80 -69.00 Q197.80 -80.40 192.40 -86.50 Q187.00 -92.60 176.20 -92.60 Q165.40 -92.60 159.80 -86.40 Q154.20 -80.20 154.20 -68.80 L154.20 -64.60 L199.60 -65.00Z" fill="currentColor"></path><path d="M304.00 0.00 Q288.20 0.00 279.30 -8.80 Q270.40 -17.60 270.40 -33.00 L270.40 -87.40 L240.60 -87.40 L240.60 -110.00 L270.40 -110.00 L270.40 -141.00 L295.60 -141.00 L295.60 -110.00 L337.80 -110.00 L337.80 -87.40 L295.60 -87.40 L295.60 -33.00 Q295.60 -22.60 305.80 -22.60 L335.80 -22.60 L335.80 0.00Z" fill="currentColor"></path><path d="M446.54 -9.86 L476.10 -89.38 L481.48 -84.00 Q476.22 -84.11 470.95 -82.43 Q465.69 -80.75 460.20 -77.11 Q454.71 -73.47 448.78 -67.65 L444.30 -72.35 Q453.37 -83.89 461.43 -90.38 Q469.50 -96.88 476.89 -99.57 Q484.28 -102.26 491.00 -102.26 Q498.95 -102.26 501.70 -99.18 Q504.44 -96.10 502.09 -89.71 L472.52 -8.29 L467.70 -15.46 Q472.97 -15.12 478.29 -16.52 Q483.61 -17.92 489.15 -21.17 Q494.70 -24.42 500.52 -29.57 L504.66 -24.53 Q495.70 -14.56 487.64 -8.57 Q479.58 -2.58 472.30 0.06 Q465.02 2.69 458.07 2.69 Q449.56 2.69 446.76 -0.28 Q443.96 -3.25 446.54 -9.86Z M485.62 -143.58 Q485.62 -148.40 487.75 -152.15 Q489.88 -155.90 493.86 -158.03 Q497.83 -160.16 503.21 -160.16 Q510.82 -160.16 515.47 -155.85 Q520.12 -151.54 520.12 -144.48 Q520.12 -139.78 517.94 -136.02 Q515.75 -132.27 511.83 -130.09 Q507.91 -127.90 502.42 -127.90 Q494.81 -127.90 490.22 -132.27 Q485.62 -136.64 485.62 -143.58Z" fill="currentColor"></path><path d="M594.60 -79.97 Q593.14 -84.11 589.67 -86.69 Q586.20 -89.26 580.94 -89.26 Q573.99 -89.26 567.44 -84.56 Q560.89 -79.86 555.29 -72.24 Q549.69 -64.62 545.43 -55.89 Q541.18 -47.15 538.82 -38.98 Q536.47 -30.80 536.47 -24.98 Q536.47 -20.27 538.71 -18.14 Q540.95 -16.02 545.10 -16.02 Q548.23 -16.02 552.60 -18.20 Q556.97 -20.38 561.78 -24.53 Q566.60 -28.67 571.30 -34.50 Q576.01 -40.32 580.04 -47.54 Q584.07 -54.77 586.76 -62.94 L610.28 -136.53 Q608.38 -138.77 605.97 -140.90 Q603.56 -143.02 600.87 -144.87 Q598.18 -146.72 595.27 -148.18 L596.73 -153.44 L640.07 -160.61 L643.77 -160.61 L594.71 -8.06 L590.57 -15.46 Q595.38 -15.34 600.59 -16.86 Q605.80 -18.37 611.40 -21.73 Q617.00 -25.09 622.82 -30.46 L627.08 -25.65 Q613.98 -10.30 602.94 -3.81 Q591.91 2.69 582.28 2.69 Q574.66 2.69 571.75 0.00 Q568.84 -2.69 570.86 -8.29 L583.29 -45.02 L585.19 -45.02 Q576.01 -30.35 568.62 -21.06 Q561.22 -11.76 555.18 -6.61 Q549.13 -1.46 543.64 0.56 Q538.15 2.58 532.89 2.58 Q526.06 2.58 520.74 -0.06 Q515.42 -2.69 512.39 -8.06 Q509.37 -13.44 509.37 -21.62 Q509.37 -31.25 512.78 -42.17 Q516.20 -53.09 522.36 -63.67 Q528.52 -74.26 536.86 -82.88 Q545.21 -91.50 555.01 -96.71 Q564.81 -101.92 575.45 -101.92 Q583.74 -101.92 589.39 -98.39 Q595.05 -94.86 599.30 -87.14Z" fill="currentColor"></path><path d="M690.92 -91.84 Q685.54 -91.84 680.84 -88.70 Q676.14 -85.57 672.33 -80.08 Q668.52 -74.59 665.78 -67.59 Q663.03 -60.59 661.52 -52.81 Q660.01 -45.02 660.01 -37.41 Q660.01 -25.42 664.77 -20.50 Q669.53 -15.57 678.04 -15.57 Q683.86 -15.57 688.79 -17.42 Q693.72 -19.26 698.20 -23.58 Q702.68 -27.89 707.05 -35.50 L714.66 -35.50 Q708.39 -20.72 701.50 -12.38 Q694.62 -4.03 686.50 -0.67 Q678.38 2.69 668.18 2.69 Q657.10 2.69 649.26 -1.34 Q641.42 -5.38 637.33 -13.05 Q633.24 -20.72 633.24 -31.70 Q633.24 -43.79 636.43 -54.49 Q639.62 -65.18 645.39 -73.92 Q651.16 -82.66 658.89 -89.04 Q666.62 -95.42 675.80 -98.84 Q684.98 -102.26 694.95 -102.26 Q705.03 -102.26 711.25 -99.34 Q717.46 -96.43 720.32 -91.50 Q723.18 -86.58 723.18 -80.53 Q723.18 -75.38 721.16 -70.17 Q719.14 -64.96 715.78 -61.38 Q708.73 -58.69 701.17 -56.17 Q693.61 -53.65 685.77 -51.35 Q677.93 -49.06 670.03 -47.04 Q662.14 -45.02 654.41 -43.23 L654.86 -52.64 Q666.50 -55.89 674.57 -58.80 Q682.63 -61.71 687.73 -64.40 Q692.82 -67.09 695.57 -69.83 Q698.31 -72.58 699.38 -75.49 Q700.44 -78.40 700.44 -81.87 Q700.44 -85.01 699.38 -87.19 Q698.31 -89.38 696.24 -90.61 Q694.17 -91.84 690.92 -91.84Z" fill="currentColor"></path><path d="M786.34 -8.40 L798.78 -45.02 L800.68 -45.02 Q791.50 -30.46 784.10 -21.17 Q776.71 -11.87 770.61 -6.66 Q764.50 -1.46 759.07 0.56 Q753.64 2.58 748.26 2.58 Q741.43 2.58 736.11 -0.06 Q730.79 -2.69 727.77 -8.01 Q724.74 -13.33 724.74 -21.50 Q724.74 -31.02 728.22 -41.89 Q731.69 -52.75 737.90 -63.22 Q744.12 -73.70 752.46 -82.32 Q760.81 -90.94 770.61 -96.10 Q780.41 -101.25 790.94 -101.25 Q799.11 -101.25 804.82 -97.78 Q810.54 -94.30 814.79 -86.58 L810.09 -79.52 Q808.52 -83.55 805.10 -86.13 Q801.69 -88.70 796.31 -88.70 Q789.48 -88.70 782.98 -84.00 Q776.49 -79.30 770.89 -71.74 Q765.29 -64.18 761.03 -55.50 Q756.78 -46.82 754.37 -38.70 Q751.96 -30.58 751.96 -24.86 Q751.96 -20.16 754.20 -18.09 Q756.44 -16.02 760.58 -16.02 Q764.39 -16.02 769.60 -19.15 Q774.81 -22.29 780.41 -27.94 Q786.01 -33.60 790.94 -41.10 Q795.86 -48.61 799.11 -57.34 L811.77 -91.73 L824.87 -99.57 L840.22 -99.57 L810.09 -8.06 L806.06 -15.46 Q810.87 -15.34 816.02 -16.86 Q821.18 -18.37 826.78 -21.73 Q832.38 -25.09 838.20 -30.46 L842.46 -25.65 Q829.35 -10.30 818.32 -3.81 Q807.29 2.69 797.77 2.69 Q790.04 2.69 787.18 0.00 Q784.33 -2.69 786.34 -8.40Z" fill="currentColor"></path><path d="M856.34 -25.98 Q857.69 -24.64 859.20 -22.46 Q860.71 -20.27 864.07 -15.57 Q867.43 -10.75 870.79 -8.90 Q874.15 -7.06 877.85 -7.06 Q882.66 -7.06 886.30 -8.57 Q889.94 -10.08 892.02 -12.99 Q894.09 -15.90 894.09 -20.05 Q894.09 -23.30 892.86 -26.38 Q891.62 -29.46 888.26 -33.04 Q884.90 -36.62 878.41 -41.55 Q872.14 -46.48 868.27 -50.96 Q864.41 -55.44 862.78 -60.09 Q861.16 -64.74 861.16 -70.00 Q861.16 -79.07 865.81 -86.41 Q870.46 -93.74 879.30 -98.00 Q888.15 -102.26 900.47 -102.26 Q910.10 -102.26 915.98 -100.13 Q921.86 -98.00 924.66 -94.30 Q927.46 -90.61 927.46 -85.90 Q927.46 -82.43 925.90 -79.91 Q924.33 -77.39 921.42 -75.99 Q918.50 -74.59 914.47 -74.59 Q913.35 -75.71 911.73 -77.62 Q910.10 -79.52 907.08 -83.66 Q904.17 -87.70 900.81 -89.94 Q897.45 -92.18 894.09 -92.18 Q888.04 -92.18 884.79 -89.15 Q881.54 -86.13 881.54 -81.09 Q881.54 -78.40 882.83 -75.54 Q884.12 -72.69 887.54 -68.99 Q890.95 -65.30 897.45 -59.81 Q903.94 -54.54 907.64 -49.73 Q911.34 -44.91 912.90 -40.32 Q914.47 -35.73 914.47 -30.91 Q914.47 -21.39 909.04 -13.78 Q903.61 -6.16 893.98 -1.74 Q884.34 2.69 871.80 2.69 Q861.38 2.69 854.94 0.39 Q848.50 -1.90 845.48 -5.77 Q842.46 -9.63 842.46 -14.22 Q842.46 -17.70 844.08 -20.33 Q845.70 -22.96 848.84 -24.47 Q851.98 -25.98 856.34 -25.98Z" fill="currentColor"></path><rect x="345.8" y="-4.0" width="84.0" height="15.0" fill="#0B3BFF"></rect></svg></a>
+  <div class="tools">
+    <a class="pill solid mail" href="#" data-u="aslanoral" data-d="gmail.com"><span data-l="tr">Konuşalım</span><span data-l="en">Let&#x27;s talk</span></a>
+    <button class="pill mono" id="lang" type="button" aria-label="Change language">EN</button>
+  </div>
+</header>
+
+<main>
+  <div class="crumb mono rv" style="--i:0">
+    <a href="./#what">← <span data-l="tr">Hizmetler</span><span data-l="en">Services</span></a>
+    <span lang="en">06_ Technical execution</span>
+  </div>
+  <h1 class="rv" style="--i:1">Lead generation</h1>
+  <p class="line rv" style="--i:2"><span data-l="tr">İlgiyi, alıcılarla gerçek görüşmelere dönüştürün.</span><span data-l="en">Turn attention into real conversations with buyers.</span></p>
+
+  <section class="get rv" style="--i:3" aria-label="Deliverables">
+    <span class="mono"><span data-l="tr">Alacağınız_</span><span data-l="en">You get_</span></span>
+    <ul><li><span data-l="tr">Landing sayfaları</span><span data-l="en">Landing pages</span></li><li><span data-l="tr">Lead magnet&#x27;ler</span><span data-l="en">Lead magnets</span></li><li><span data-l="tr">E-posta akışları</span><span data-l="en">Email sequences</span></li><li><span data-l="tr">Doğrudan ulaşım</span><span data-l="en">Outreach</span></li></ul>
+  </section>
+
+  <div class="next rv" style="--i:4">
+    <a class="pill solid cta mail" href="#" data-u="aslanoral" data-d="gmail.com"><span data-l="tr">Projeni konuşalım</span><span data-l="en">Let&#x27;s talk about it</span> →</a>
+    <a class="big" href="brand-strategy.html"><span class="mono"><span data-l="tr">Sıradaki</span><span data-l="en">Next</span>_</span><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span> →</a>
+  </div>
+</main>
+
+<footer>
+  <a class="mono mail" id="mailtext" href="#" data-u="aslanoral" data-d="gmail.com">aslanoral [at] gmail.com</a>
+  <span class="mono" lang="en">© 2026 Net Ideas · Creative strategy / Technical execution</span>
+</footer>
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('lang');
+  function set(l){root.classList.remove('tr','en');root.classList.add(l);root.lang=l;btn.textContent=l==='tr'?'EN':'TR';try{localStorage.setItem('ni-lang',l)}catch(e){}}
+  var saved=null;try{saved=localStorage.getItem('ni-lang')}catch(e){}
+  if(saved){set(saved)}else if(!(navigator.language||'tr').toLowerCase().startsWith('tr')){set('en')}
+  btn.addEventListener('click',function(){set(root.classList.contains('tr')?'en':'tr')});
+  document.querySelectorAll('.mail').forEach(function(m){m.href='mailto:'+m.dataset.u+'@'+m.dataset.d});
+  var t=document.getElementById('mailtext');t.textContent=t.dataset.u+'@'+t.dataset.d;
+})();
+</script>
+</body>
+</html>
