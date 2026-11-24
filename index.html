@@ -60,10 +60,13 @@
   .services{list-style:none;margin:0;padding:0}
   .services li{border-bottom:1px solid var(--line)}
   .services a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:6px 0;text-decoration:none}
-  .services .w{font-weight:700;font-size:clamp(34px,6.6vw,100px);line-height:1.04;letter-spacing:-.055em;transition:color .35s}
-  .services .w::after{content:".";color:var(--blue)}
+  .services .w{display:inline-grid;font-weight:700;font-size:clamp(34px,6.6vw,100px);line-height:1.04;letter-spacing:-.055em}
+  .services .w>span{grid-area:1/1;transition:opacity .7s cubic-bezier(.2,.7,.2,1),filter .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .services .w>span::after{content:".";color:var(--blue)}
+  .services .w .b{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.035em;color:var(--blue);opacity:0;filter:blur(8px);transform:translateY(10px)}
+  .services li.alt .w .a,.services a:hover .w .a{opacity:0;filter:blur(8px);transform:translateY(-10px)}
+  .services li.alt .w .b,.services a:hover .w .b{opacity:1;filter:none;transform:none}
   .services .arr{font-size:clamp(20px,2.4vw,36px);opacity:0;transform:translateX(-10px);transition:opacity .3s,transform .3s}
-  .services a:hover .w{color:var(--blue);font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.035em}
   .services a:hover .arr{opacity:1;transform:none}
   @media (max-width:760px){.ww{grid-template-columns:1fr;row-gap:14px}.we{position:static;font-size:clamp(44px,12vw,64px)}}
 
@@ -76,7 +79,7 @@
   .rv{opacity:0;transform:translateY(26px)}
   html.ready .rv{opacity:1;transform:none;transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i,0) * 110ms)}
   a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-  @media (prefers-reduced-motion:reduce){.rv,html.ready .rv{opacity:1;transform:none;transition:none}.set i{transition:none}}
+  @media (prefers-reduced-motion:reduce){.rv,html.ready .rv{opacity:1;transform:none;transition:none}.set i,.services .w>span{transition:none}}
 </style>
 </head>
 <body>
@@ -90,12 +93,12 @@
   <section class="ww" id="what" aria-label="Services">
     <h2 class="we rv" style="--i:1"><span data-l="en">We</span><span data-l="tr">Biz</span> <span class="rot"><span class="set" data-l="en"><i class="on">handle</i><i>deliver</i><i>serve</i><i>help</i></span><span class="set" data-l="tr"><i class="on">hallederiz</i><i>sunarız</i><i>yaparız</i><i>büyütürüz</i></span></span></h2>
     <ul class="services">
-      <li class="rv" style="--i:2"><a href="brand-strategy.html"><span class="w"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></span><span class="arr" aria-hidden="true">→</span></a></li>
-      <li class="rv" style="--i:3"><a href="identity.html"><span class="w"><span data-l="tr">Kimlik</span><span data-l="en">Identity</span></span><span class="arr" aria-hidden="true">→</span></a></li>
-      <li class="rv" style="--i:4"><a href="websites.html"><span class="w"><span data-l="tr">Web siteleri</span><span data-l="en">Websites</span></span><span class="arr" aria-hidden="true">→</span></a></li>
-      <li class="rv" style="--i:5"><a href="social-media.html"><span class="w"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></span><span class="arr" aria-hidden="true">→</span></a></li>
-      <li class="rv" style="--i:6"><a href="ai-visibility.html"><span class="w"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span><span class="arr" aria-hidden="true">→</span></a></li>
-      <li class="rv" style="--i:7"><a href="lead-generation.html"><span class="w">Lead generation</span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:2"><a href="brand-strategy.html"><span class="w"><span class="a"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></span><span class="b" aria-hidden="true"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:3"><a href="identity.html"><span class="w"><span class="a"><span data-l="tr">Kimlik</span><span data-l="en">Identity</span></span><span class="b" aria-hidden="true"><span data-l="tr">Kimlik</span><span data-l="en">Identity</span></span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:4"><a href="websites.html"><span class="w"><span class="a"><span data-l="tr">Web siteleri</span><span data-l="en">Websites</span></span><span class="b" aria-hidden="true"><span data-l="tr">Web siteleri</span><span data-l="en">Websites</span></span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:5"><a href="social-media.html"><span class="w"><span class="a"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></span><span class="b" aria-hidden="true"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:6"><a href="ai-visibility.html"><span class="w"><span class="a"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span><span class="b" aria-hidden="true"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span></span><span class="arr" aria-hidden="true">→</span></a></li>
+      <li class="rv" style="--i:7"><a href="lead-generation.html"><span class="w"><span class="a">Lead generation</span><span class="b" aria-hidden="true">Lead generation</span></span><span class="arr" aria-hidden="true">→</span></a></li>
     </ul>
   </section>
 </main>
@@ -140,8 +143,13 @@
   var logo=document.getElementById('logo'), ideas=logo.querySelector('.ideas'), fx=logo.querySelector('#fx');
   var finished=false;
   function done(){if(finished)return;finished=true;root.classList.remove('intro');root.classList.add('ready');rotate()}
+  function wave(){
+    var lis=document.querySelectorAll('.services li'),k=0;
+    (function go(){var li=lis[k];li.classList.add('alt');setTimeout(function(){li.classList.remove('alt')},1500);k++;if(k<lis.length){setTimeout(go,520)}else{k=0;setTimeout(go,2800)}})();
+  }
   function rotate(){
     if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    setTimeout(wave,1400);
     setInterval(function(){document.querySelectorAll('.set').forEach(function(set){var w=set.children,k=0;for(var j=0;j<w.length;j++)if(w[j].classList.contains('on'))k=j;for(var j=0;j<w.length;j++)w[j].classList.remove('out');w[k].classList.remove('on');w[k].classList.add('out');w[(k+1)%w.length].classList.add('on')})},1900);
   }
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
