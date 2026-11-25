@@ -3,6 +3,7 @@
 Tek sayfalık, statik site (HTML + CSS, kurulum gerekmez). GitHub Pages ile ücretsiz yayınlanır.
 
 - `index.html` — sitenin tamamı (TR / EN dil düğmesi içinde)
+- `references.html`, `resources.html`, `ai-blog.html` — Referanslar, Kaynaklar, AI Blog sayfaları (iskelet; içerik sonra eklenecek)
 - `favicon.svg` — sekme ikonu
 - `logo.svg`, `logo-full.svg` — seçilen logo (01, "Creative strategy / Technical execution")
 

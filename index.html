@@ -110,6 +110,11 @@
   a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
   @media (prefers-reduced-motion:reduce){.rv,html.ready .rv{opacity:1;transform:none;transition:none}.set i,.services .w>span{transition:none}}
 @media (max-width:760px){.ww,html.tr .ww{font-size:clamp(30px,calc((100vw - 2 * var(--pad)) * .13),52px)}.services .w>span,.we{white-space:nowrap}}@media (max-width:700px){main{padding-top:calc(142px + 32px)}}
+
+  /* nav: 7 items */
+  .nav a{white-space:nowrap;flex:none}
+  @media (max-width:1240px) and (min-width:1081px){.nav{gap:20px;margin-left:32px}.nav a{font-size:15px}}
+  @media (max-width:1080px) and (min-width:701px){.dock{height:auto;flex-wrap:wrap;padding-top:10px;padding-bottom:0;row-gap:4px}.nav{order:3;width:100%;margin:0;gap:24px;overflow-x:auto}.nav a{padding:10px 0}main{padding-top:calc(148px + 32px)}}
 </style>
 </head>
 <body>
@@ -158,6 +163,9 @@
   <div class="nav">
     <a href="#what"><span data-l="tr">Hizmetler</span><span data-l="en">Services</span></a>
     <a href="work.html"><span data-l="tr">İşler</span><span data-l="en">Work</span></a>
+    <a href="references.html"><span data-l="tr">Referanslar</span><span data-l="en">References</span></a>
+    <a href="resources.html"><span data-l="tr">Kaynaklar</span><span data-l="en">Resources</span></a>
+    <a href="ai-blog.html">AI Blog</a>
     <a href="about.html"><span data-l="tr">Hakkımızda</span><span data-l="en">About</span></a>
     <a href="contact.html"><span data-l="tr">İletişim</span><span data-l="en">Contact</span></a>
   </div>
@@ -345,5 +353,6 @@
   else{var mo=new MutationObserver(function(){if(root.classList.contains('ready')){mo.disconnect();setTimeout(init,600)}});mo.observe(root,{attributes:true,attributeFilter:['class']})}
 })();
 </script>
+<script>(function(){var a=document.querySelector('.nav a.on'),n=a&&a.parentNode;if(n&&n.scrollWidth>n.clientWidth){n.scrollLeft=Math.max(0,a.offsetLeft-n.offsetLeft-24)}})();</script>
 </body>
 </html>
