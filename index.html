@@ -12,9 +12,8 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;700&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@1,6..72,600&display=swap" rel="stylesheet">
-<!-- intro: only the letters "ideas" are downloaded from these -->
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Rubik+Bubbles&family=Rubik+Moonrocks&family=Rubik+Puddles&family=Monoton&family=Syne:wght@800&family=Bodoni+Moda:ital,wght@1,700&family=Silkscreen&family=Fraunces:ital,wght@1,900&family=Instrument+Serif:ital@1&text=ideas&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;700&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@1,6..72,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;700&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@1,6..72,600&display=swap" rel="stylesheet"></noscript>
 <style>
   :root{--ink:#111111;--blue:#0B3BFF;--muted:#5C5C5C;--line:rgba(17,17,17,.12);--pad:clamp(20px,4.4vw,64px)}
   *{box-sizing:border-box}
@@ -33,7 +32,6 @@
   html.intro .dock{background:rgba(255,255,255,0);border-color:transparent}
   .home{display:block;color:var(--ink);text-decoration:none}
   #logo{display:block;height:28px;width:auto;overflow:visible;transform-origin:50% 50%}
-  #fx{transform-box:fill-box;transform-origin:0% 100%}
   .tools{display:flex;align-items:center;gap:8px;transition:opacity .6s .25s}
   html.intro .tools{opacity:0}
   .nav{display:flex;align-items:center;gap:28px;margin:0 auto 0 44px;transition:opacity .6s .25s}
@@ -53,13 +51,12 @@
   @media (max-width:700px){#logo{height:22px}.dock{height:auto;flex-wrap:wrap;padding-top:10px;padding-bottom:0;row-gap:4px}.nav{order:3;width:100%;margin:0;gap:20px;overflow-x:auto}.nav a{font-size:15px;padding:10px 0}main{padding-top:calc(142px + 32px)}.tl-r{display:none}}
 
   /* intro: every "ideas" material is its own pre-painted layer; only opacity and transform ever change */
-  .stage{position:fixed;left:0;top:0;z-index:32;pointer-events:none}
-  .lk{position:absolute;left:0;top:0;opacity:0;will-change:opacity,transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-  .lk svg{display:block;overflow:visible}
-  .stage.warm .lk{opacity:.002}
-  .stage.go .lk{animation:lkin .17s cubic-bezier(.2,.8,.2,1) both,lkout .12s ease-out forwards}
-  @keyframes lkin{from{opacity:0;transform:translate3d(0,1em,0)}to{opacity:1;transform:translate3d(0,0,0)}}
-  @keyframes lkout{from{opacity:1}to{opacity:0}}
+  /* intro film: a pre-rendered "ideas" (real materials, 60 fps) that sits exactly where the logo's own "ideas" is, under the live "net_" */
+  .ifilm{position:fixed;left:0;top:0;z-index:25;width:0;height:0;pointer-events:none;background:#fff;opacity:0;transition:opacity .2s ease-out;object-fit:fill;
+    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 6%,#000 96%,transparent 100%);-webkit-mask-composite:source-in;
+    mask-image:linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 6%,#000 96%,transparent 100%);mask-composite:intersect}
+  html:not(.intro) .ifilm{display:none}
+  html.intro:not(.placed) #logo{visibility:hidden}
   html:not(.settled) .dock{-webkit-backdrop-filter:none;backdrop-filter:none}
 
   .veil{position:fixed;inset:0;z-index:20;background:#fff;pointer-events:none;transition:opacity .8s cubic-bezier(.7,0,.2,1)}
@@ -112,49 +109,6 @@
   @media (prefers-reduced-motion:reduce){.rv,html.ready .rv{opacity:1;transform:none;transition:none}.set i,.services .w>span{transition:none}}
 @media (max-width:760px){.ww,html.tr .ww{font-size:clamp(30px,calc((100vw - 2 * var(--pad)) * .13),52px)}.services .w>span,.we{white-space:nowrap}}@media (max-width:700px){main{padding-top:calc(142px + 32px)}}
 #what{scroll-margin-top:260px}
-
-  /* nav v2: 4 items + dropdowns + mobile menu */
-  .nav{gap:30px}
-  .nav .top{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-  .nav .car{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .25s}
-  .dd{position:relative}
-  .dd:hover .car,.dd:focus-within .car{transform:translateY(1px) rotate(225deg)}
-  .panel{position:absolute;left:-22px;top:100%;padding-top:16px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .25s cubic-bezier(.2,.7,.2,1),visibility 0s .25s;z-index:40}
-  .dd:hover .panel,.dd:focus-within .panel{opacity:1;visibility:visible;transform:none;transition:opacity .2s,transform .25s cubic-bezier(.2,.7,.2,1)}
-  .panel .box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 24px 48px -24px rgba(17,17,17,.28);display:flex;gap:10px;min-width:260px}
-  .panel.wide .box{min-width:520px}
-  .panel .col{display:flex;flex-direction:column;flex:1;min-width:0}
-  .panel .k{display:block;color:var(--blue);padding:4px 12px 10px}
-  .panel .k small{color:var(--muted);font-size:11px;margin-left:4px}
-  .nav .panel a{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;color:var(--ink);font-size:16px;font-weight:500;white-space:nowrap;text-decoration:none;transition:background .15s}
-  .nav .panel a::after{display:none}
-  .nav .panel a::before{content:"_";color:var(--blue);opacity:0;margin-right:-4px;transition:opacity .15s}
-  .nav .panel a:hover,.nav .panel a.on{background:#F4F4F2}
-  .nav .panel a:hover::before,.nav .panel a.on::before{opacity:1}
-  .new{font-style:normal;font-size:10.5px;color:#fff;background:var(--blue);border-radius:999px;padding:2px 8px;letter-spacing:.04em}
-  .mbtn{display:none}
-  .mnav{position:fixed;inset:0;z-index:60;background:#fff;display:flex;flex-direction:column;overflow-y:auto;animation:mnIn .3s cubic-bezier(.2,.7,.2,1)}
-  .mnav[hidden]{display:none}
-  @keyframes mnIn{from{opacity:0;transform:translateY(-12px)}}
-  .mbar{display:flex;justify-content:space-between;align-items:center;height:72px;padding:0 var(--pad);border-bottom:1px solid var(--line);flex:none}
-  .mbar .mono{color:var(--blue)}
-  .mbody{padding:12px var(--pad) 0;flex:1}
-  .mbody section{padding:14px 0;border-bottom:1px solid var(--line)}
-  .mbody .big{display:block;text-decoration:none;font-weight:700;font-size:clamp(34px,10vw,52px);letter-spacing:-.05em;line-height:1.05}
-  .mbody .big::before{content:"";display:inline-block;width:.42em;height:.085em;margin-right:.1em;background:var(--blue);vertical-align:-.04em}
-  .msub{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
-  .msub .k{color:var(--blue);width:100%}
-  .msub a{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;background:#F4F4F2;text-decoration:none;font-size:15px}
-  .msub a.on{background:var(--ink);color:#fff}
-  .mfoot{padding:24px var(--pad) 32px;flex:none}
-  html.mopen{overflow:hidden}
-  @media (max-width:900px){
-    body .nav{display:none}
-    body header,body .dock{height:72px;flex-wrap:nowrap;padding-top:0;padding-bottom:0}
-    .mbtn{display:inline-flex}
-  }
-  @media (max-width:520px){.tools .pill.solid{display:none}}
-  @media (max-width:900px){html body main{padding-top:calc(102px + clamp(20px,3vh,40px))}}
 </style>
 </head>
 <body>
@@ -195,19 +149,25 @@
   </div>
 </footer>
 
+<noscript><style>.veil,.ifilm{display:none!important}html.intro body{overflow:auto}html.intro .tools,html.intro .nav,html.intro .topline,.rv{opacity:1!important;transform:none!important}html.intro #logo{visibility:visible!important}</style></noscript>
 <div class="veil" aria-hidden="true"></div>
+<video id="ifilm" class="ifilm" muted playsinline preload="auto" disablepictureinpicture aria-hidden="true" tabindex="-1" poster="data:image/webp;base64,UklGRuwdAABXRUJQVlA4IOAdAABQ0ACdASrQAiwBPqFQo0ymJKMiI9Ep0MAUCWlu4XTfarWuqGJvmZ4t2Xbwngz2YO2n9izqoZr9j1sPoL9Pr/34z/h+wZ/SP896yvgZ/at+GOdFi/FVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVSb7Xw/dV8qFtdXECD+hvVwPOeUcrzu7u7u7u7u7u7u7u7u6CW/1YaQZbcAUAIv+p2LeTFncbxSvyiEr0HiJrUvqNzDug3tpyS3g3v9qtYgX4qqqqqqqqqqqqqqqqqlbfAOlMm1oA4Wp7fLmmcsxVOHrTVO8nZt7fM0rMpHLuwGiYiMyCFJfiqqqqqqqqqqqqqqqqqpTM/KwiMbzRfQh8k39Bp3M7n+d3Wp4XbTLF5w83ryvGqNWA/krI/1Ic3oYnLZKgrM2WmxzZGJyeujbkLiN8TEGOUvZFKJlJK1BcxLSGtAx9B9i3OgfsJy+j4/C0vGRuXPEbOkkPNHdNauHBsO+y58I+9+4c7fS1QYPSh9mWkJqJ17Xgw5XkHIVpc9KhEa7K3VHHVweOBZ6KUY0IwCXRQstWob5L0akcWP6pJE6I4hVcb+xGsVFI5TgtZd2dpZ8az8K81QTlprIA/UjbMTuiIafjOkCQKbk7/bITxImu9tlYGn3AQQC+cQswATROpOvgJuW2KW+0B+oGhfn0XEIcIuM09SnPEG/P2mPbr2qTODtlaKMGFjXmbLEf877K6J8+ix3iH8es9khajc/f39Goxl4FoeD23fyVbTFGsIxQbG0w7e6a+gW+3RjnW0WLYKBn9VABXbXDpdSsCLc+/UbkXNGRncjWGD+4nU2mfZG+6vqFE+J2hRoDpchNx9fnT6DWBzG+EIEry6LDsBLY5Os/UcqkecjS9MLmh7yq6AOd1SNCJZBEVZZnZ9hMME/Me5fcfYltTjiIJdnlpQtE8q9IbTClgorHfsTaWxmlTbKrXyt0TpWRPR09JXoQQdoKMP9LMYZAZ+WEaVYuuHt11IjohCDsUQHbKFFzHQ6JkWhKUj8u//PxfcVpx+Yo8xC0rsLJATkCJBkIylAAZo4pZq9oMc1hKhIcVZ0OyWYKwn8Et1s2YAiy6PLzFcZ06zmNsBwCBO49Km00YoJ+wMQydRTfZAMPoNXnpPGZav6U5Ux0MRZ0F2JRNwmjPUMoEdU5Y3Pexh0qTfEvC7moDFEWgHnKC4kznplHw3MX8mvozxSAtQoT9Ek3yo2fTatX1tlMtqdDg6lU1bX5CMa5NKBt8l6AEXGKpI28qOSPuoRe7qdoFYwu8ceY5mDZMOIrGC9icTm4hePhx9mAraNHv4u3Wl1D6UhOBFZfnCFk973Yd+L98neFAN95F61fkoAgtmnRcON+SyXysQfiSee+pDKvUTLqRAUQjgcrWBfGrYeK+mOfHsRjR+zRx4hOc6TziiehXW1Pn56V+RzGuuKhlyvNo7ScxLgH8YWLuVy3913wCb3W/5wMIxIsXwz0rGSXgI7eUaUQzGSzlJssWxqLWSHLckqs2M45PS5fRnZ4LacJp93UrTkZ16aXVMXdbPi4f47rbjDL7lgCIJo4oOw+YefQOVXQYHHUGjRRTC9XctkiVcaryNUrxdIBGkYCUMjFJ4UV/YXEaOEM1/YJUj9IdDNl0mn8HzD+ZAEpZIoMSnK8yKU0XTH+c1JJJhkFWKiIgdRpFCJdy9F/Usq0aJ9v0perCFrfTefc5YEIvWr1wXso9gF0ZKbFLY/Sw0NyBh3wVr6k/cWg/W9dQ2bMYFAl86eEg2YPV49exs+y0GeaZWEo/+M7kpE9RJxRSsnBUeQJXkK8GlZmaKqiR+DvaRpJYSZ5U5BwAEcKvolOpXamUF3E2gK7mht5HD0+7ypXzAk71b/kie1Ugy6uU1VkCGFvv+QMhjxQw0KB3P/7Vr5wwygzhsW0CuXNhigJbMphr4wdooNHjb+Bkcx7FNEnIzeODS+ggFE0H1glx/9yirE1i0qAr1mNI8RtShNJimyQ/Wxnw10EoXippv90kQ2zDbpCDnn/x7QVwPOeUfJUaSZBFvJWnRRmZzHrgedBgtFGZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZlsAAP7/TkAAAAAAAAAAABurps6u/zET6TPybOiaZlAGvAYpq79J0Aoc6PQI2gE4U1lEbwEN4RhvvDoEdVln0KYaSZULPoo03LhXls5V4V/PRmAUDSd/+I9gAJDfcyYwDlpvEDLfhVQZzLRDPGAq+qwDco8dYD1xW7zBOFom8/sYk9xsmGBuDfMxRYDeyfXsFbLR0ZvHvs/J+8xKLH49YmcM7YZjHqnVD4xUexddFyQbiBbE9G3KymoDgjE2j7SOaeE6IN4GTNZ/HIL3eIj6NU0Bht/POwq+/nXLtHKIoxkPUHfNoIyJQiZokUpBaKhVuaMx2rBrTIs1qT30KhLPCEYEZKUrNnitS2K7YAulJwRqFVANF1e7s+DfC3njdp1vMnlw6NuHx///uhn3ZYzp7ycATWIXk2K5qAv9pcomBgUnyHbgclul0rbR5Jw9TKCi0oQ5CvxwVlY03LhGgJQL9UZDC46Q97IwW05NC9KsGSrGD6Qnu2AjjO2v/9wIb3bjEGMkUubpRiIR3+1S07YU4VTYekDQs5gQVgcqEETZB9GDaxNXbObJp5EO8ujDraNIHEBT4oeixaTcPTZw1FUU9D1hyF2XDFdcJYlKVfF5Av81F/yB/FqAGlXUZV0IFqliIUfo3lnVw7gc/89ac/hec1DUGF91+PKs8Mh/CwrGXIjLmLYrDz5mz6ZxPUHQzEAHvvvX5tVUpDTgo+qvDRMYQuQ/hi6IZZkfkCdrUZseqbmIX6G7Hp2Qw+gbMrWOm0y8TT8Zh7/MuMEx07o4p+Fq+Y6SB1xy25YD8ElmqES25H2b+k0N1SV5+LgxIlHIGYv8EdkGHV7iw2fcOSlnzzyvkh3Wa8KdN2FXcSk4WPzJVVPoH6+fRK2GJsz81voZ6VzQD0x/b+9U6EQ009GTlSChm3DIqVtHVUoOeMtHywo7Pr9AeycpKAvNRmtIkneEyHGI6ZVZ25/Y892KAVnrh7V6VGmcF32aSvXVCbyV98uKEovkrFO10Pdnir8+2qpd67GkPqAsmAuSYT4BfSWhXuLP52oJU/O5l3zUWirOUl1obosOpzzTqSeBXOK58fgRSp2wyPny2KMbS3hOV5UdiaqWapShj67DOPelggsTNXPRbzotYOLsBIYWi1LUMfsWS73I1qHBbBrs2kVzTsztSQzO/yn4K+KX3s/IBlEmB6V5WVVEt85XC9+aP+3agN7UHFXOvusvXxeOIMNQGYznr+bRmI76jtWCj1OyDcAFQzkXFxrFczso+MkMGCeV3WXnA5A/GdCoRby9TClbHetUmha8B9zh2dtOoPNC0nUj18C3BlxYDTJU6K1rimj+qPLfKu0N0SzyPLKO7Uoe8EQzOVsT1a9Bsw6qDXN3Un++jan4bDcSU4R5bqw6rUg1g/yHUD/Ds2kHQeObvQX81Fq9LX6a+dAHYzAeyrOV7E5UjPsxMcRcqPoxhnbthuKNTWrhfT9NL0uuu9139u90wPITh+qvG7kzIQM3Q31KMUbKTZfl9AylNT13vNAFNGg1t6pbwR3YodTVmvcR3kS5rvV+qJI86wLPa0rCQCJXWvx59H41LcRpjRtDojWfWG5FnM9ZYNkLHZ6t2Pznhf+bh9VsAhPBY58M+fxoetJizvKAX3sw69tJYNzXqKW32kWAsDkJYW/8e4V6QV/SP8tCJRD5qhdz3BujqL9gW46o4Hslgxg2yOkPt3sGMvYK257c3hC6FbMZBYN9WkbXsiexXfL37b09/VEzoHELISMa2v863sv7FBNLsib3xlkHA4PSFQCievC9lKx5CDjmzi0YP1XXtKl+9DksyRQMsi4lBvqXv1tElqahIj41RfkJ3w0bRwqmVazCv+RSmcR01So2jf6HcrtRWuObm5nfV78rtNOSss7FC93D9vmnni3xDZwN7BZjy/hghEYoLi+0r5ujVjSRP35g2q5aRXx24aFiXPi2fiPPc1HK0CXGAanZGWLJViAY0jKlwP8TYHO5Nd+xSc2dUkbTFZY0tHOrHa1phxIMf+3F7nFHYwX95/k7W94KCeYp15aC7b4pBHcLyu6TeWMpXu1NOxjqm8RTtwB/OyDB9u9/NoZmyi2tam2RjhkSf69qv7SBk4hIJBqlisLgX7oUaTIZ0GqT8WotLceHqL1sr41nJoDLbabzla0HaAe8uTpWuafI1eIoEWM9T95tljBc62LqIe2KPEzbio3HdwUNGzyZX8CAWKEg8wV2gle42pxmQaKg6iKvKnj9CTlAq7Ym3ET38IaR/noERyOnw0UWiHyLn3XI4lMyBSIcGNMIom1p0Die7wOTxU88kPe77CM1lsuEuMFWdutn3dD/4Cr9nyUR129vnJcLRkl/YSdjXFwnfvG3ocnYRhhf96wRrBz9a+gIkY3Mg/SXnM4dVC7vufG90KSjEo9pBpFhMcZOPrvULcuoDY3P9WA2aE3l60gMfoSRqHxgB+/O1bSO+1/Pgd68IGSx48ud3vNJFRCuqybGTlMJbd6kYzjJBc++zVNk2OiijxCU2MEVp+sx1CDJtBDhJh7vsEHCNFz/4vDXxVIflVV54M67jn0IBWUX+x4f4VA6cwDsGuRAEoHbp/uQ7lpV+I6PZm5cIyVE1IV7PvNVEj8TclkZ93U6UyaGk47C1VLRec21E/8z7fSMQVcUjiuxz6ZgFJjTMe3aTr9pKK4MB7GAJxO7iCdGV68dECUoB6NcwqLp0tJffU+h4ewjxPDPphqF4IAtBR8meQ4aFoV+QQ+/QlBxTOR9Sn1gL738TphyipdPxDFXfvhCM+1j1caMkyN0pkJVgx7hjgKj5dWF7NYXobG/gvUAe7fJiZsiwAmAhWCnjrOhcqM7w0VgLsJFYd2xpskt1WDKeYWd0jfmC+N7c6Wys4rufYL8XRA/g6wQfe9scH34a1iPNuK7/BhfOazX5uKB2hCUc0N9UDX4B3scVOuK6OwIohFOZOigu3lLa/YIvFeM+EpmguUdxfUJB2DThdER1Km/OzAWE9tCGCe2RclfOcUi+Adk/9++iCZHZ3sULKu2o+DHyZdlHU99mdVMT6IrK4NH4ZSooHmfZqjRrqWKTZmO0jkiszlZS0sA0fQWYDXvWHxsVNNLy2hFqPvqTsLsLzzL96wFL+6aBHDVbUs63sf9knZ7PVF0rQdO4nrSIa5CQlqENXn9htSnx+m/Rth+aqll0DZUOgW2l6uxCm/D1XnT1WHZUiV9MT3ngwDWF766Gz6UNXrZGQNVjHYhd4KzXRLLsZre5JLDr6dUgqmY8Y7z7qx3uwTKwMa8YCP9ZXffM/ENoSEw8VLbByIeonSyDZ+bocB0mpI/sJT7x8f5xBOtEAkReorQ4fEsFzc5Oe0MiccvAcoXhlorNQ9Ce8q0Epgc+IMrPuddnKhhHSfLMi88MrowY1xkzjfUoV0D5RMoo5IsZC22pos3+wPjrgfMyntXZ6kJg1ZLaw+lMCRgX4YvVmGfjK4ueWgoh2EkxqDMil74unzXkHRP+1crFHF3g4uY5XrCnlTsvRojoqGTkeyLIxvKoeQxBMLRf/M7LA/BMkmSsJG2xvVUZzg9tmKm3xdXy7363x3ySZaek7k+G0KBiIQupNEs+H/iEnEBJjliBmEZyUVlgTX3jVChQWI4yYr0inB6yONYPikJVNsGXlxX3nDVPwEpVsVmqskxvBnZ+hjPWC4eaBjTbhMBt56qq1jQOxZlzPAmX+1qIy+yKzQ03Rr3g7AZTgqoXQTRs2hBYagGYp+5WqpHNCMSt37XXfI+7G6DmaO6qQl4nOZyNqpo8n1ma3Fv+PfbXslqL3AKwWKyKTpE4m21c1ywumoyHJr9Cq99eqb36Eq70UKBavHcx/3s5L7bytZF6PodTLAiOwW91NvEi2jE6XDKMJ78gZBe0ViB9XZrnq+yAHChpp9Q5ENqf8igRXMckMkBtMeonOz4w8JcuO7fpN5EaBRX6uZoec/ofNPYB/Uor+lh9+ShRj9+xk3xGSoeZ3VJrENfdXsO7F7JTnR9SflUYE1fBFir4mRJpvdCsVzagj8htKMhG8GzkYrjGUCvcl5mZWXEwtLliXLGEwBIEJyxYDYkioAe28b1VgxIkJxVyPDl226LtE/g2x/mkrykJvcDer7/kwM4BtdjUsbWPv6uEWDSm+iGeZkpFOmpBd4Xp+Hcpo2U1LmhQd0sDhJ2zLDfYqLpL9zBO9vYERE1D24U6y/arZ9lrY2rf2m9/MV5PV3DVvqXN2lVZpOS37x6MkFICfCE/m3aHXzOErK1xCGtjPwGOit2l4MR7t8oyBFvp0lFG19l/3BJkYDZCemOl+eb0/8Aj2e04QoL6DeazAm9VWvosxKeQj6YvmRvpBLkWXQFrHZOSB7OQjBlTHPivzG254X0o+X5kOKY9TcQaTxgHePM4oV4coBZU/6qsz+Slb4anJEfGJPyrjXnX5YR0ArXUAqjpUzT4xu/jyVWsval0N7Mbf1pRl1oEfmt45CqXS499xEbsiwUeaxABKyWm9Et8+A2aj/E39bMyLTNaFETvQ20jA1xRi3hnmfoR9xvT6ohCvuRUOqQ6uNjrhofp/FVZbzfGzOxaAbQVyFkfH6qwracEcqHS3xJZ4udAvt2blGANIuv5vSBoIfBctbM9ZhdXW+qATRo27R+Wig4UjGpDK6jnWbEzDm881oGnzqFr+ZDAw2Xu4GmNN0/tcKaxAU3wFdBmCNFR1AY0ISTzz1JpIbhBl8BGTF+mE7MRHOJz45hbVYxYcQuQkKuKDu/471OgTSyAkLeTXO5/+2G5iYfmIaaXVzqumPPssIiTZvkvk0YE69AYWBGsPryIgg5DFUEy0acJGG6XS4uflvgOB0h8GBHKhbgocILeUIrckLAyepIi622ER6R3T1jmaYYSqzo72cT+cbFCpDqx0FFyDYYJiSRzhy/MgxqXfU38DudOni0YwrjinM1sUcNwXXkKUVj6R9zsFblyMh4byWnHkfVBbZY9Fz/HYJ+l1rwVyNQ2gVe4n/+6nSXGM5IuMypvQTZiOsPqbXAC3abTnFSVqL8AAEOoYSTYIMlLqVmaMGGbIt2u3o9Aeh3mwU/cxeiifTvEn3vls1EFeoNcm5+5ErJp8VDDUFyZDE/rz4huw4N0PmK3q/zo9udHtzk3pZVel1GCoP1M1z4tu5MXX5Jj0nACW9eocJt1iEoAYrjzAxVShSu8/v/4EEYZtqC/tsI6GWjnRsNmi0jXjtCe6BR8Or5ZZitqH2uRv8fQnzOq6wPWvv75KzEW1UYue06uHZdTfeZZ21Yo4aErvgBVob3YeBTvzIDODyWX+Wqaba3lttZqT9eLnSuvh+wQcLPCraC6ykMqVIfaI97/Ioo1fFFCWOsAYwpCtfwxcFYUUIz8fdNCL6y8t/dqo/Gun/lM2NKXMSDvWveXvNMC6W2MHKK+vTtktgeDlCeoewDTV3K+vlzDoEZgtqqbJ2wDhiZ3aR2cKmfBcmLMgqtnkBrfXTawZ7zfzyNPzK1HcxGgLVWSekXw789Wa2bfr6CUxbc6SJ8fn3z5rUbwyjy2Vqkv9uA1Et3k0s0jiTk/z1Zwa1Mldw7OBk0ztSavN2icyTnFo0/tFlKjGCyybikiq2zqWzgd0gHNk0qUquglQyFiYsYjZ+0WqX7hxi4aKE9DZwMp6UBtwgWr/IbEe/OlmSbBc2oM7pQweCz5PdcSY2pVnJqDFGmJyhFMCpQQ7QjK0Ad0WA5rndAV9eE+a5sAcsGmr82Cr8ym+M1gWlqvVFI9T1LlaJwSVp5PYevCNZ/J1cIC8JVvdAdDe8+azmTOr2M9QbCObBuxZ6MQ33pFd33UvFxrdoxj92Tcrf+LKhh2m+7KkSM9s3SG2ldNVIWHs+9egTGxXO3CpxfLRof08ajbrnhy8xtOhLe3c4XFWHOpMsz7g+YVyliKXUXlgi2eZ/4bkVSKeXEZTNOIcPvNwH9UwZllzEUzCg/p0Mi/DWLROiBTUvwNvLaXg7U5mUurFnqFkW7N5VR0YgFr5Dkq5yuBo1XfE5xvHHlwjGF9QR0qNv08QfvSzrhp+dnromFmFQfPLpnBP4p2KCH2++ls6xgfJ6sOoVqiC9kICwx6ErNxv0+q784Nif10q96HbD3h50el6FHsZNpJqM95oryBjOn9iKEsJQY6StWGQ0aNAVQwBiIGef+N+4ATy6tL7tJtV9b+ihXsIpn06eftbiN71rfGbEafpfDIfi5QP/tMVAedVTe8tnsOfBOkmbqs+9FfvwPdT8nVvSOqLgRmXfgXqAiZ+H0NRJ8zvb0DKn08jfqPbDzS60RWRbfq9Sb7rvOQ1Y21CPrCCcVfLLWV3HDf1JtRdVzLQ83eJsCg0T8cYN9b1ISrKLZ3DjKQ7auMExWPnkgDmXpMJDmV+pFVbNbN6fY7WoZkFUVL7c+b3EmMiE35JxR8xmqwT8MISw8cRQuNMDQjTB/aoirdDyElakLvzdPHogCHOg6jaMNksL0OBHzVU6fd6V5A/j3s7EguTRYL9lYSeES4l3jcrYHkbN4JESCgkl+0wpQhVm+/ZqYERzjWNDTSUcH17e/db0PkSwfPgQlMKwGBhlrw3eE1u+ObtuiVTrOGN+5mz50jwWOIWb5wFXSrIdqQwQ6/Fbu9EeeTpiPdQrcBYoPxm8GeIWj4+3eOJ8APvL5z2HoJ2dw6DmPsYfgftpQfY6CNWor3z2yCUv2EHYzGJyIwRtvnRqjgrDy6qMv/49B9oSNMO0LvekLCyEvW1TCa4lx/CZQI80e66EAWDhopawoO7k6SS3Q1RAxGYv6MKunvyBrICy3c0hhnrIQdx5T4WGC5ftU+bV/SCwJ8yXMlXN3oiRgXcULEhYaYlNQACq5HOmeMwZ3cZM77xVmyAaWUX1tXiRUxszqnTHTC+6Dme+AcCnJGepiBl54IPx0CgRZb7q7bMRU8Y6Mtc8SanfEXxXF1VMynTnUpOdV+Mr0ap2H7CXwSNhjboLCBsV+Ca2SyL8HT8kVX+1UIgmrI9koccg9QmxECs5tmOb7ail/HIJ4PAibRyvKm35fpJdPJhGS5TGVv63c0+ug2EWvPJUoqDNqxS6QIQbgf8q9O7kdH7hQ/A3kIq4KmNWr4yfzxpynsQlFrv8E3OvNk+4aQJFhClgAbDltjstP52JnmDBAJIJ0Akg6GbDzzQXHWYaxt7XlhSbG+/4r2Aj57QR31NL5jN0/6pOU2+pbLBAhm1+sMyxftM8y04Z2gHjPzdUlXpandPbyCoOZ0rzufhGs0azOPpuIybVrFGNTAAJet3cPKK6SHcKUnSUGN2l3I6TRaOA7UFgimmQcRa7nXAALHX9mytQqLcAJL5XDF17bfFRIglLGVJoMwTD+az/Cni2AOMAJ4JDoeXOnHysptNhKGZFd3qB0aK+awRY3JPHFe0Y6/XH9ymgFoZeUQOstMk9LY/04sVfDftmTiHPtQscI+SPlJhkusPFv4vlsOSlAHEI5awbrM167kwsi6MMtA/7qoW4gkM5JTKzTRVfLTgyxIPCjpCGJv2GYR6g018yEgseU7woeTZMempTiLyVlsCvuC4hT34QJPpNNW/qhcUAIuGUf9hSyWygryVBzHvpFOQCBHQC9MJwtie/q3mbj4ZFwxu7RCVTMsLeZg6tD7sLCuB3K7zXq77LjBzTG93UXcvXkXYTbPHOPlQhs5B0tLB50is85wEnOSIGvs0JwaNhPmFumRr9IirTj3XHvpEJAihWh2xdL3PhLwRV3GZcQ9RGSuFoKQOCpva0s4jgnPFiWKjqwXnksXdxysVNenysIroCxxvz/AYfFbE/HTrl170JFzYoBqmGEhhavkUH+GrtwUvebnL/JuM6s6vKQHX8cN4R7awxlK2DbeAwMelTQte/uMMvDw+9BEO1pBHOG2LOSfTbifghnuvugEjYPz59gxqt1Zm37kfiUQcKTwY8Ae0aVRBT3NZ7WP0UOrKO1QAAAAAAAAAAAAAAAAAAA"></video>
+<script>setTimeout(function(){var r=document.documentElement;if(r.classList.contains('intro')){r.classList.remove('intro');r.classList.add('ready');r.classList.add('settled')}},10000);(function(v){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;v.muted=true;v.src=matchMedia('(max-width:760px)').matches?'ideas-720.mp4':'ideas-1440.mp4';v.load()}catch(e){}})(document.getElementById('ifilm'))</script>
 
 <div class="topline mono" lang="en"><span><b>_</b> Creative strategy / Technical execution</span><span class="tl-r">Istanbul — Global</span></div>
 <nav class="dock" aria-label="Menu">
-  <a class="home" href="./" aria-label="Net Ideas"><svg id="logo" viewBox="5 -172 932 194" role="img" aria-label="Net Ideas" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gChrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".42" stop-color="#9A9EA8"/><stop offset=".5" stop-color="#1A1C22"/><stop offset=".62" stop-color="#6E7686"/><stop offset=".85" stop-color="#E9ECF2"/><stop offset="1" stop-color="#8C93A3"/></linearGradient><linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF1B8"/><stop offset=".35" stop-color="#E2B84A"/><stop offset=".55" stop-color="#8A6A1F"/><stop offset=".75" stop-color="#F7E08A"/><stop offset="1" stop-color="#9C7424"/></linearGradient><filter id="fFur" x="-30%" y="-60%" width="160%" height="220%" color-interpolation-filters="sRGB"><feTurbulence type="turbulence" baseFrequency="0.32" numOctaves="4" seed="4" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="40" xChannelSelector="R" yChannelSelector="B" result="fuzz"/><feTurbulence type="fractalNoise" baseFrequency="1.6 0.3" numOctaves="2" seed="9" result="str"/><feColorMatrix in="str" type="matrix" values="0 0 0 0 0.02  0 0 0 0 0.22  0 0 0 0 0.48  0 0 0 -2.2 1.35" result="dark"/><feComposite in="dark" in2="fuzz" operator="in" result="darkIn"/><feColorMatrix in="str" type="matrix" values="0 0 0 0 0.75  0 0 0 0 0.92  0 0 0 0 1  0 0 0 2.4 -1.75" result="lite"/><feComposite in="lite" in2="fuzz" operator="in" result="liteIn"/><feMerge result="fur"><feMergeNode in="fuzz"/><feMergeNode in="darkIn"/><feMergeNode in="liteIn"/></feMerge><feGaussianBlur in="SourceAlpha" stdDeviation="14" result="vb"/><feDiffuseLighting in="vb" surfaceScale="9" diffuseConstant="1.05" lighting-color="#FFFFFF" result="vol"><feDistantLight azimuth="235" elevation="52"/></feDiffuseLighting><feComposite in="fur" in2="vol" operator="arithmetic" k1="1.15" k2="0" k3="0" k4="0" result="lit"/><feComposite in="lit" in2="fur" operator="in" result="litIn"/><feDropShadow in="litIn" dx="0" dy="12" stdDeviation="10" flood-color="#0A2A4A" flood-opacity=".22"/></filter><filter id="fGloss" x="-30%" y="-60%" width="160%" height="220%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceAlpha" stdDeviation="7" result="b"/><feSpecularLighting in="b" surfaceScale="7" specularConstant="1.15" specularExponent="26" lighting-color="#FFFFFF" result="s"><fePointLight x="640" y="-420" z="260"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="sIn"/><feComposite in="SourceGraphic" in2="sIn" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="lit"/><feDropShadow in="lit" dx="0" dy="10" stdDeviation="8" flood-color="#111111" flood-opacity=".18"/></filter><filter id="fFrog" x="-30%" y="-60%" width="160%" height="220%" color-interpolation-filters="sRGB"><feFlood flood-color="#86CF3A" result="g"/><feComposite in="g" in2="SourceAlpha" operator="in" result="base"/><feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="12" result="sp"/><feColorMatrix in="sp" type="matrix" values="0 0 0 0 0.12  0 0 0 0 0.36  0 0 0 0 0.10  0 0 0 11 -5.6" result="bl"/><feComposite in="bl" in2="SourceAlpha" operator="in" result="blIn"/><feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" result="bump"/><feGaussianBlur in="SourceAlpha" stdDeviation="6" result="ab"/><feComposite in="bump" in2="ab" operator="arithmetic" k1="0" k2=".35" k3="1" k4="0" result="h"/><feSpecularLighting in="h" surfaceScale="6" specularConstant="1.2" specularExponent="30" lighting-color="#FFFFFF" result="s"><fePointLight x="600" y="-380" z="240"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="sIn"/><feMerge result="m"><feMergeNode in="base"/><feMergeNode in="blIn"/><feMergeNode in="sIn"/></feMerge><feDropShadow in="m" dx="0" dy="10" stdDeviation="8" flood-color="#1D3A0C" flood-opacity=".22"/></filter><filter id="fWood" x="-30%" y="-60%" width="160%" height="220%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.22" numOctaves="3" seed="5" result="w"/><feColorMatrix in="w" type="matrix" values="0.55 0 0 0 0.30  0.34 0 0 0 0.15  0.14 0 0 0 0.05  0 0 0 0 1" result="c"/><feComposite in="c" in2="SourceAlpha" operator="in" result="wood"/><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feSpecularLighting in="b" surfaceScale="4" specularConstant=".7" specularExponent="18" lighting-color="#FFE9C7" result="s"><fePointLight x="620" y="-400" z="300"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="sIn"/><feComposite in="wood" in2="sIn" operator="arithmetic" k1="0" k2="1" k3=".7" k4="0"/></filter><filter id="fMarble" x="-30%" y="-60%" width="160%" height="220%" color-interpolation-filters="sRGB"><feTurbulence type="turbulence" baseFrequency="0.012 0.035" numOctaves="4" seed="21" result="v"/><feColorMatrix in="v" type="matrix" values="-0.9 0 0 0 1.02  -0.9 0 0 0 1.02  -0.8 0 0 0 1.04  0 0 0 0 1" result="c"/><feComposite in="c" in2="SourceAlpha" operator="in" result="m"/><feDropShadow in="m" dx="0" dy="6" stdDeviation="5" flood-color="#111111" flood-opacity=".25"/></filter><filter id="fStone" x="-30%" y="-60%" width="160%" height="220%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="4" seed="8" result="n"/><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="ab"/><feComposite in="n" in2="ab" operator="arithmetic" k1="0" k2=".6" k3="1" k4="0" result="h"/><feDiffuseLighting in="h" surfaceScale="5" diffuseConstant="1.1" lighting-color="#FFFFFF" result="d"><feDistantLight azimuth="225" elevation="48"/></feDiffuseLighting><feComposite in="SourceGraphic" in2="d" operator="arithmetic" k1="1.25" k2="0" k3="0" k4="0" result="m"/><feComposite in="m" in2="SourceAlpha" operator="in" result="mi"/><feDropShadow in="mi" dx="0" dy="8" stdDeviation="7" flood-color="#111111" flood-opacity=".25"/></filter><filter id="fNeon" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="g1"/><feGaussianBlur in="SourceGraphic" stdDeviation="2" result="g2"/><feMerge><feMergeNode in="g1"/><feMergeNode in="g1"/><feMergeNode in="g2"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M15.40 0.00 L15.40 -110.00 L39.80 -110.00 L39.80 -89.00 L46.60 -89.00 L39.80 -83.20 Q39.80 -96.80 47.70 -104.40 Q55.60 -112.00 69.40 -112.00 Q85.60 -112.00 95.30 -101.20 Q105.00 -90.40 105.00 -72.20 L105.00 0.00 L80.00 0.00 L80.00 -69.60 Q80.00 -79.60 74.80 -85.00 Q69.60 -90.40 60.20 -90.40 Q51.00 -90.40 45.70 -84.80 Q40.40 -79.20 40.40 -68.80 L40.40 0.00Z" fill="currentColor"></path><path d="M176.20 2.00 Q162.20 2.00 151.80 -3.40 Q141.40 -8.80 135.70 -18.50 Q130.00 -28.20 130.00 -41.20 L130.00 -68.80 Q130.00 -81.80 135.70 -91.50 Q141.40 -101.20 151.80 -106.60 Q162.20 -112.00 176.20 -112.00 Q190.00 -112.00 200.30 -106.60 Q210.60 -101.20 216.30 -91.50 Q222.00 -81.80 222.00 -68.80 L222.00 -49.00 L154.20 -49.00 L154.20 -41.20 Q154.20 -29.60 159.80 -23.70 Q165.40 -17.80 176.40 -17.80 Q184.80 -17.80 190.00 -20.70 Q195.20 -23.60 196.60 -29.20 L221.20 -29.20 Q218.40 -15.00 206.10 -6.50 Q193.80 2.00 176.20 2.00Z M197.80 -63.00 L197.80 -69.00 Q197.80 -80.40 192.40 -86.50 Q187.00 -92.60 176.20 -92.60 Q165.40 -92.60 159.80 -86.40 Q154.20 -80.20 154.20 -68.80 L154.20 -64.60 L199.60 -65.00Z" fill="currentColor"></path><path d="M304.00 0.00 Q288.20 0.00 279.30 -8.80 Q270.40 -17.60 270.40 -33.00 L270.40 -87.40 L240.60 -87.40 L240.60 -110.00 L270.40 -110.00 L270.40 -141.00 L295.60 -141.00 L295.60 -110.00 L337.80 -110.00 L337.80 -87.40 L295.60 -87.40 L295.60 -33.00 Q295.60 -22.60 305.80 -22.60 L335.80 -22.60 L335.80 0.00Z" fill="currentColor"></path><rect x="345.8" y="-4.0" width="84.0" height="15.0" fill="#0B3BFF"></rect><g class="ideas"><path d="M446.54 -9.86 L476.10 -89.38 L481.48 -84.00 Q476.22 -84.11 470.95 -82.43 Q465.69 -80.75 460.20 -77.11 Q454.71 -73.47 448.78 -67.65 L444.30 -72.35 Q453.37 -83.89 461.43 -90.38 Q469.50 -96.88 476.89 -99.57 Q484.28 -102.26 491.00 -102.26 Q498.95 -102.26 501.70 -99.18 Q504.44 -96.10 502.09 -89.71 L472.52 -8.29 L467.70 -15.46 Q472.97 -15.12 478.29 -16.52 Q483.61 -17.92 489.15 -21.17 Q494.70 -24.42 500.52 -29.57 L504.66 -24.53 Q495.70 -14.56 487.64 -8.57 Q479.58 -2.58 472.30 0.06 Q465.02 2.69 458.07 2.69 Q449.56 2.69 446.76 -0.28 Q443.96 -3.25 446.54 -9.86Z M485.62 -143.58 Q485.62 -148.40 487.75 -152.15 Q489.88 -155.90 493.86 -158.03 Q497.83 -160.16 503.21 -160.16 Q510.82 -160.16 515.47 -155.85 Q520.12 -151.54 520.12 -144.48 Q520.12 -139.78 517.94 -136.02 Q515.75 -132.27 511.83 -130.09 Q507.91 -127.90 502.42 -127.90 Q494.81 -127.90 490.22 -132.27 Q485.62 -136.64 485.62 -143.58Z" fill="currentColor"></path><path d="M594.60 -79.97 Q593.14 -84.11 589.67 -86.69 Q586.20 -89.26 580.94 -89.26 Q573.99 -89.26 567.44 -84.56 Q560.89 -79.86 555.29 -72.24 Q549.69 -64.62 545.43 -55.89 Q541.18 -47.15 538.82 -38.98 Q536.47 -30.80 536.47 -24.98 Q536.47 -20.27 538.71 -18.14 Q540.95 -16.02 545.10 -16.02 Q548.23 -16.02 552.60 -18.20 Q556.97 -20.38 561.78 -24.53 Q566.60 -28.67 571.30 -34.50 Q576.01 -40.32 580.04 -47.54 Q584.07 -54.77 586.76 -62.94 L610.28 -136.53 Q608.38 -138.77 605.97 -140.90 Q603.56 -143.02 600.87 -144.87 Q598.18 -146.72 595.27 -148.18 L596.73 -153.44 L640.07 -160.61 L643.77 -160.61 L594.71 -8.06 L590.57 -15.46 Q595.38 -15.34 600.59 -16.86 Q605.80 -18.37 611.40 -21.73 Q617.00 -25.09 622.82 -30.46 L627.08 -25.65 Q613.98 -10.30 602.94 -3.81 Q591.91 2.69 582.28 2.69 Q574.66 2.69 571.75 0.00 Q568.84 -2.69 570.86 -8.29 L583.29 -45.02 L585.19 -45.02 Q576.01 -30.35 568.62 -21.06 Q561.22 -11.76 555.18 -6.61 Q549.13 -1.46 543.64 0.56 Q538.15 2.58 532.89 2.58 Q526.06 2.58 520.74 -0.06 Q515.42 -2.69 512.39 -8.06 Q509.37 -13.44 509.37 -21.62 Q509.37 -31.25 512.78 -42.17 Q516.20 -53.09 522.36 -63.67 Q528.52 -74.26 536.86 -82.88 Q545.21 -91.50 555.01 -96.71 Q564.81 -101.92 575.45 -101.92 Q583.74 -101.92 589.39 -98.39 Q595.05 -94.86 599.30 -87.14Z" fill="currentColor"></path><path d="M690.92 -91.84 Q685.54 -91.84 680.84 -88.70 Q676.14 -85.57 672.33 -80.08 Q668.52 -74.59 665.78 -67.59 Q663.03 -60.59 661.52 -52.81 Q660.01 -45.02 660.01 -37.41 Q660.01 -25.42 664.77 -20.50 Q669.53 -15.57 678.04 -15.57 Q683.86 -15.57 688.79 -17.42 Q693.72 -19.26 698.20 -23.58 Q702.68 -27.89 707.05 -35.50 L714.66 -35.50 Q708.39 -20.72 701.50 -12.38 Q694.62 -4.03 686.50 -0.67 Q678.38 2.69 668.18 2.69 Q657.10 2.69 649.26 -1.34 Q641.42 -5.38 637.33 -13.05 Q633.24 -20.72 633.24 -31.70 Q633.24 -43.79 636.43 -54.49 Q639.62 -65.18 645.39 -73.92 Q651.16 -82.66 658.89 -89.04 Q666.62 -95.42 675.80 -98.84 Q684.98 -102.26 694.95 -102.26 Q705.03 -102.26 711.25 -99.34 Q717.46 -96.43 720.32 -91.50 Q723.18 -86.58 723.18 -80.53 Q723.18 -75.38 721.16 -70.17 Q719.14 -64.96 715.78 -61.38 Q708.73 -58.69 701.17 -56.17 Q693.61 -53.65 685.77 -51.35 Q677.93 -49.06 670.03 -47.04 Q662.14 -45.02 654.41 -43.23 L654.86 -52.64 Q666.50 -55.89 674.57 -58.80 Q682.63 -61.71 687.73 -64.40 Q692.82 -67.09 695.57 -69.83 Q698.31 -72.58 699.38 -75.49 Q700.44 -78.40 700.44 -81.87 Q700.44 -85.01 699.38 -87.19 Q698.31 -89.38 696.24 -90.61 Q694.17 -91.84 690.92 -91.84Z" fill="currentColor"></path><path d="M786.34 -8.40 L798.78 -45.02 L800.68 -45.02 Q791.50 -30.46 784.10 -21.17 Q776.71 -11.87 770.61 -6.66 Q764.50 -1.46 759.07 0.56 Q753.64 2.58 748.26 2.58 Q741.43 2.58 736.11 -0.06 Q730.79 -2.69 727.77 -8.01 Q724.74 -13.33 724.74 -21.50 Q724.74 -31.02 728.22 -41.89 Q731.69 -52.75 737.90 -63.22 Q744.12 -73.70 752.46 -82.32 Q760.81 -90.94 770.61 -96.10 Q780.41 -101.25 790.94 -101.25 Q799.11 -101.25 804.82 -97.78 Q810.54 -94.30 814.79 -86.58 L810.09 -79.52 Q808.52 -83.55 805.10 -86.13 Q801.69 -88.70 796.31 -88.70 Q789.48 -88.70 782.98 -84.00 Q776.49 -79.30 770.89 -71.74 Q765.29 -64.18 761.03 -55.50 Q756.78 -46.82 754.37 -38.70 Q751.96 -30.58 751.96 -24.86 Q751.96 -20.16 754.20 -18.09 Q756.44 -16.02 760.58 -16.02 Q764.39 -16.02 769.60 -19.15 Q774.81 -22.29 780.41 -27.94 Q786.01 -33.60 790.94 -41.10 Q795.86 -48.61 799.11 -57.34 L811.77 -91.73 L824.87 -99.57 L840.22 -99.57 L810.09 -8.06 L806.06 -15.46 Q810.87 -15.34 816.02 -16.86 Q821.18 -18.37 826.78 -21.73 Q832.38 -25.09 838.20 -30.46 L842.46 -25.65 Q829.35 -10.30 818.32 -3.81 Q807.29 2.69 797.77 2.69 Q790.04 2.69 787.18 0.00 Q784.33 -2.69 786.34 -8.40Z" fill="currentColor"></path><path d="M856.34 -25.98 Q857.69 -24.64 859.20 -22.46 Q860.71 -20.27 864.07 -15.57 Q867.43 -10.75 870.79 -8.90 Q874.15 -7.06 877.85 -7.06 Q882.66 -7.06 886.30 -8.57 Q889.94 -10.08 892.02 -12.99 Q894.09 -15.90 894.09 -20.05 Q894.09 -23.30 892.86 -26.38 Q891.62 -29.46 888.26 -33.04 Q884.90 -36.62 878.41 -41.55 Q872.14 -46.48 868.27 -50.96 Q864.41 -55.44 862.78 -60.09 Q861.16 -64.74 861.16 -70.00 Q861.16 -79.07 865.81 -86.41 Q870.46 -93.74 879.30 -98.00 Q888.15 -102.26 900.47 -102.26 Q910.10 -102.26 915.98 -100.13 Q921.86 -98.00 924.66 -94.30 Q927.46 -90.61 927.46 -85.90 Q927.46 -82.43 925.90 -79.91 Q924.33 -77.39 921.42 -75.99 Q918.50 -74.59 914.47 -74.59 Q913.35 -75.71 911.73 -77.62 Q910.10 -79.52 907.08 -83.66 Q904.17 -87.70 900.81 -89.94 Q897.45 -92.18 894.09 -92.18 Q888.04 -92.18 884.79 -89.15 Q881.54 -86.13 881.54 -81.09 Q881.54 -78.40 882.83 -75.54 Q884.12 -72.69 887.54 -68.99 Q890.95 -65.30 897.45 -59.81 Q903.94 -54.54 907.64 -49.73 Q911.34 -44.91 912.90 -40.32 Q914.47 -35.73 914.47 -30.91 Q914.47 -21.39 909.04 -13.78 Q903.61 -6.16 893.98 -1.74 Q884.34 2.69 871.80 2.69 Q861.38 2.69 854.94 0.39 Q848.50 -1.90 845.48 -5.77 Q842.46 -9.63 842.46 -14.22 Q842.46 -17.70 844.08 -20.33 Q845.70 -22.96 848.84 -24.47 Q851.98 -25.98 856.34 -25.98Z" fill="currentColor"></path></g><g id="fx" aria-hidden="true"></g></svg></a>
-  <div class="nav"><div class="dd"><a class="top" href="#what" aria-haspopup="true"><span data-l="tr">Hizmetler</span><span data-l="en">Services</span><i class="car" aria-hidden="true"></i></a><div class="panel wide"><div class="box"><div class="col"><span class="k mono">lab_ <small>Creative strategy</small></span><a href="brand-strategy.html"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></a><a href="ai-visibility.html"><span data-l="tr">AI görünürlüğü (GEO)</span><span data-l="en">AI visibility (GEO)</span></a><a href="lead-generation.html">Lead generation</a></div><div class="col"><span class="k mono">studio_ <small>Technical execution</small></span><a href="identity.html"><span data-l="tr">Marka kimliği</span><span data-l="en">Brand identity</span></a><a href="websites.html"><span data-l="tr">Web &amp; SEO</span><span data-l="en">Websites &amp; SEO</span></a><a href="social-media.html"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></a></div></div></div></div><a class="top" href="work.html"><span data-l="tr">İşler</span><span data-l="en">Work</span></a><div class="dd"><a class="top" href="resources.html" aria-haspopup="true"><span data-l="tr">Kaynaklar</span><span data-l="en">Resources</span><i class="car" aria-hidden="true"></i></a><div class="panel"><div class="box"><div class="col"><a href="ai-blog.html">AI Blog<em class="new mono"><span data-l="tr">yeni</span><span data-l="en">new</span></em></a><a href="resources.html#blog">Blog</a><a href="resources.html#guides"><span data-l="tr">Rehberler &amp; Checklist'ler</span><span data-l="en">Guides &amp; checklists</span></a><a href="resources.html#tools"><span data-l="tr">Araçlar</span><span data-l="en">Tools</span></a><a href="resources.html#glossary"><span data-l="tr">Sözlük</span><span data-l="en">Glossary</span></a></div></div></div></div><a class="top" href="about.html"><span data-l="tr">Hakkımızda</span><span data-l="en">About</span></a></div>
+  <a class="home" href="./" aria-label="Net Ideas"><svg id="logo" viewBox="5 -172 932 194" role="img" aria-label="Net Ideas" xmlns="http://www.w3.org/2000/svg"><path d="M15.40 0.00 L15.40 -110.00 L39.80 -110.00 L39.80 -89.00 L46.60 -89.00 L39.80 -83.20 Q39.80 -96.80 47.70 -104.40 Q55.60 -112.00 69.40 -112.00 Q85.60 -112.00 95.30 -101.20 Q105.00 -90.40 105.00 -72.20 L105.00 0.00 L80.00 0.00 L80.00 -69.60 Q80.00 -79.60 74.80 -85.00 Q69.60 -90.40 60.20 -90.40 Q51.00 -90.40 45.70 -84.80 Q40.40 -79.20 40.40 -68.80 L40.40 0.00Z" fill="currentColor"></path><path d="M176.20 2.00 Q162.20 2.00 151.80 -3.40 Q141.40 -8.80 135.70 -18.50 Q130.00 -28.20 130.00 -41.20 L130.00 -68.80 Q130.00 -81.80 135.70 -91.50 Q141.40 -101.20 151.80 -106.60 Q162.20 -112.00 176.20 -112.00 Q190.00 -112.00 200.30 -106.60 Q210.60 -101.20 216.30 -91.50 Q222.00 -81.80 222.00 -68.80 L222.00 -49.00 L154.20 -49.00 L154.20 -41.20 Q154.20 -29.60 159.80 -23.70 Q165.40 -17.80 176.40 -17.80 Q184.80 -17.80 190.00 -20.70 Q195.20 -23.60 196.60 -29.20 L221.20 -29.20 Q218.40 -15.00 206.10 -6.50 Q193.80 2.00 176.20 2.00Z M197.80 -63.00 L197.80 -69.00 Q197.80 -80.40 192.40 -86.50 Q187.00 -92.60 176.20 -92.60 Q165.40 -92.60 159.80 -86.40 Q154.20 -80.20 154.20 -68.80 L154.20 -64.60 L199.60 -65.00Z" fill="currentColor"></path><path d="M304.00 0.00 Q288.20 0.00 279.30 -8.80 Q270.40 -17.60 270.40 -33.00 L270.40 -87.40 L240.60 -87.40 L240.60 -110.00 L270.40 -110.00 L270.40 -141.00 L295.60 -141.00 L295.60 -110.00 L337.80 -110.00 L337.80 -87.40 L295.60 -87.40 L295.60 -33.00 Q295.60 -22.60 305.80 -22.60 L335.80 -22.60 L335.80 0.00Z" fill="currentColor"></path><rect x="345.8" y="-4.0" width="84.0" height="15.0" fill="#0B3BFF"></rect><g class="ideas"><path d="M446.54 -9.86 L476.10 -89.38 L481.48 -84.00 Q476.22 -84.11 470.95 -82.43 Q465.69 -80.75 460.20 -77.11 Q454.71 -73.47 448.78 -67.65 L444.30 -72.35 Q453.37 -83.89 461.43 -90.38 Q469.50 -96.88 476.89 -99.57 Q484.28 -102.26 491.00 -102.26 Q498.95 -102.26 501.70 -99.18 Q504.44 -96.10 502.09 -89.71 L472.52 -8.29 L467.70 -15.46 Q472.97 -15.12 478.29 -16.52 Q483.61 -17.92 489.15 -21.17 Q494.70 -24.42 500.52 -29.57 L504.66 -24.53 Q495.70 -14.56 487.64 -8.57 Q479.58 -2.58 472.30 0.06 Q465.02 2.69 458.07 2.69 Q449.56 2.69 446.76 -0.28 Q443.96 -3.25 446.54 -9.86Z M485.62 -143.58 Q485.62 -148.40 487.75 -152.15 Q489.88 -155.90 493.86 -158.03 Q497.83 -160.16 503.21 -160.16 Q510.82 -160.16 515.47 -155.85 Q520.12 -151.54 520.12 -144.48 Q520.12 -139.78 517.94 -136.02 Q515.75 -132.27 511.83 -130.09 Q507.91 -127.90 502.42 -127.90 Q494.81 -127.90 490.22 -132.27 Q485.62 -136.64 485.62 -143.58Z" fill="currentColor"></path><path d="M594.60 -79.97 Q593.14 -84.11 589.67 -86.69 Q586.20 -89.26 580.94 -89.26 Q573.99 -89.26 567.44 -84.56 Q560.89 -79.86 555.29 -72.24 Q549.69 -64.62 545.43 -55.89 Q541.18 -47.15 538.82 -38.98 Q536.47 -30.80 536.47 -24.98 Q536.47 -20.27 538.71 -18.14 Q540.95 -16.02 545.10 -16.02 Q548.23 -16.02 552.60 -18.20 Q556.97 -20.38 561.78 -24.53 Q566.60 -28.67 571.30 -34.50 Q576.01 -40.32 580.04 -47.54 Q584.07 -54.77 586.76 -62.94 L610.28 -136.53 Q608.38 -138.77 605.97 -140.90 Q603.56 -143.02 600.87 -144.87 Q598.18 -146.72 595.27 -148.18 L596.73 -153.44 L640.07 -160.61 L643.77 -160.61 L594.71 -8.06 L590.57 -15.46 Q595.38 -15.34 600.59 -16.86 Q605.80 -18.37 611.40 -21.73 Q617.00 -25.09 622.82 -30.46 L627.08 -25.65 Q613.98 -10.30 602.94 -3.81 Q591.91 2.69 582.28 2.69 Q574.66 2.69 571.75 0.00 Q568.84 -2.69 570.86 -8.29 L583.29 -45.02 L585.19 -45.02 Q576.01 -30.35 568.62 -21.06 Q561.22 -11.76 555.18 -6.61 Q549.13 -1.46 543.64 0.56 Q538.15 2.58 532.89 2.58 Q526.06 2.58 520.74 -0.06 Q515.42 -2.69 512.39 -8.06 Q509.37 -13.44 509.37 -21.62 Q509.37 -31.25 512.78 -42.17 Q516.20 -53.09 522.36 -63.67 Q528.52 -74.26 536.86 -82.88 Q545.21 -91.50 555.01 -96.71 Q564.81 -101.92 575.45 -101.92 Q583.74 -101.92 589.39 -98.39 Q595.05 -94.86 599.30 -87.14Z" fill="currentColor"></path><path d="M690.92 -91.84 Q685.54 -91.84 680.84 -88.70 Q676.14 -85.57 672.33 -80.08 Q668.52 -74.59 665.78 -67.59 Q663.03 -60.59 661.52 -52.81 Q660.01 -45.02 660.01 -37.41 Q660.01 -25.42 664.77 -20.50 Q669.53 -15.57 678.04 -15.57 Q683.86 -15.57 688.79 -17.42 Q693.72 -19.26 698.20 -23.58 Q702.68 -27.89 707.05 -35.50 L714.66 -35.50 Q708.39 -20.72 701.50 -12.38 Q694.62 -4.03 686.50 -0.67 Q678.38 2.69 668.18 2.69 Q657.10 2.69 649.26 -1.34 Q641.42 -5.38 637.33 -13.05 Q633.24 -20.72 633.24 -31.70 Q633.24 -43.79 636.43 -54.49 Q639.62 -65.18 645.39 -73.92 Q651.16 -82.66 658.89 -89.04 Q666.62 -95.42 675.80 -98.84 Q684.98 -102.26 694.95 -102.26 Q705.03 -102.26 711.25 -99.34 Q717.46 -96.43 720.32 -91.50 Q723.18 -86.58 723.18 -80.53 Q723.18 -75.38 721.16 -70.17 Q719.14 -64.96 715.78 -61.38 Q708.73 -58.69 701.17 -56.17 Q693.61 -53.65 685.77 -51.35 Q677.93 -49.06 670.03 -47.04 Q662.14 -45.02 654.41 -43.23 L654.86 -52.64 Q666.50 -55.89 674.57 -58.80 Q682.63 -61.71 687.73 -64.40 Q692.82 -67.09 695.57 -69.83 Q698.31 -72.58 699.38 -75.49 Q700.44 -78.40 700.44 -81.87 Q700.44 -85.01 699.38 -87.19 Q698.31 -89.38 696.24 -90.61 Q694.17 -91.84 690.92 -91.84Z" fill="currentColor"></path><path d="M786.34 -8.40 L798.78 -45.02 L800.68 -45.02 Q791.50 -30.46 784.10 -21.17 Q776.71 -11.87 770.61 -6.66 Q764.50 -1.46 759.07 0.56 Q753.64 2.58 748.26 2.58 Q741.43 2.58 736.11 -0.06 Q730.79 -2.69 727.77 -8.01 Q724.74 -13.33 724.74 -21.50 Q724.74 -31.02 728.22 -41.89 Q731.69 -52.75 737.90 -63.22 Q744.12 -73.70 752.46 -82.32 Q760.81 -90.94 770.61 -96.10 Q780.41 -101.25 790.94 -101.25 Q799.11 -101.25 804.82 -97.78 Q810.54 -94.30 814.79 -86.58 L810.09 -79.52 Q808.52 -83.55 805.10 -86.13 Q801.69 -88.70 796.31 -88.70 Q789.48 -88.70 782.98 -84.00 Q776.49 -79.30 770.89 -71.74 Q765.29 -64.18 761.03 -55.50 Q756.78 -46.82 754.37 -38.70 Q751.96 -30.58 751.96 -24.86 Q751.96 -20.16 754.20 -18.09 Q756.44 -16.02 760.58 -16.02 Q764.39 -16.02 769.60 -19.15 Q774.81 -22.29 780.41 -27.94 Q786.01 -33.60 790.94 -41.10 Q795.86 -48.61 799.11 -57.34 L811.77 -91.73 L824.87 -99.57 L840.22 -99.57 L810.09 -8.06 L806.06 -15.46 Q810.87 -15.34 816.02 -16.86 Q821.18 -18.37 826.78 -21.73 Q832.38 -25.09 838.20 -30.46 L842.46 -25.65 Q829.35 -10.30 818.32 -3.81 Q807.29 2.69 797.77 2.69 Q790.04 2.69 787.18 0.00 Q784.33 -2.69 786.34 -8.40Z" fill="currentColor"></path><path d="M856.34 -25.98 Q857.69 -24.64 859.20 -22.46 Q860.71 -20.27 864.07 -15.57 Q867.43 -10.75 870.79 -8.90 Q874.15 -7.06 877.85 -7.06 Q882.66 -7.06 886.30 -8.57 Q889.94 -10.08 892.02 -12.99 Q894.09 -15.90 894.09 -20.05 Q894.09 -23.30 892.86 -26.38 Q891.62 -29.46 888.26 -33.04 Q884.90 -36.62 878.41 -41.55 Q872.14 -46.48 868.27 -50.96 Q864.41 -55.44 862.78 -60.09 Q861.16 -64.74 861.16 -70.00 Q861.16 -79.07 865.81 -86.41 Q870.46 -93.74 879.30 -98.00 Q888.15 -102.26 900.47 -102.26 Q910.10 -102.26 915.98 -100.13 Q921.86 -98.00 924.66 -94.30 Q927.46 -90.61 927.46 -85.90 Q927.46 -82.43 925.90 -79.91 Q924.33 -77.39 921.42 -75.99 Q918.50 -74.59 914.47 -74.59 Q913.35 -75.71 911.73 -77.62 Q910.10 -79.52 907.08 -83.66 Q904.17 -87.70 900.81 -89.94 Q897.45 -92.18 894.09 -92.18 Q888.04 -92.18 884.79 -89.15 Q881.54 -86.13 881.54 -81.09 Q881.54 -78.40 882.83 -75.54 Q884.12 -72.69 887.54 -68.99 Q890.95 -65.30 897.45 -59.81 Q903.94 -54.54 907.64 -49.73 Q911.34 -44.91 912.90 -40.32 Q914.47 -35.73 914.47 -30.91 Q914.47 -21.39 909.04 -13.78 Q903.61 -6.16 893.98 -1.74 Q884.34 2.69 871.80 2.69 Q861.38 2.69 854.94 0.39 Q848.50 -1.90 845.48 -5.77 Q842.46 -9.63 842.46 -14.22 Q842.46 -17.70 844.08 -20.33 Q845.70 -22.96 848.84 -24.47 Q851.98 -25.98 856.34 -25.98Z" fill="currentColor"></path></g></svg></a>
+  <div class="nav">
+    <a href="#what"><span data-l="tr">Hizmetler</span><span data-l="en">Services</span></a>
+    <a href="work.html"><span data-l="tr">İşler</span><span data-l="en">Work</span></a>
+    <a href="about.html"><span data-l="tr">Hakkımızda</span><span data-l="en">About</span></a>
+    <a href="contact.html"><span data-l="tr">İletişim</span><span data-l="en">Contact</span></a>
+  </div>
   <div class="tools">
     <a class="pill solid" href="contact.html"><span data-l="tr">Konuşalım</span><span data-l="en">Let's talk</span></a>
-    <button class="pill mono mbtn" id="mopen" type="button" aria-label="Open menu" aria-controls="mnav" aria-expanded="false"><span data-l="tr">Menü</span><span data-l="en">Menu</span></button>
     <button class="pill mono" id="lang" type="button" aria-label="Change language">EN</button>
   </div>
 </nav>
-<div class="mnav" id="mnav" role="dialog" aria-modal="true" aria-label="Menu" hidden><div class="mbar"><span class="mono"><span data-l="tr">Menü_</span><span data-l="en">Menu_</span></span><button class="pill mono" id="mclose" type="button" aria-label="Close menu"><span data-l="tr">Kapat</span><span data-l="en">Close</span></button></div><div class="mbody"><section><a class="big" href="#what"><span data-l="tr">Hizmetler</span><span data-l="en">Services</span></a><div class="msub"><span class="k mono">lab_</span><a href="brand-strategy.html"><span data-l="tr">Marka stratejisi</span><span data-l="en">Brand strategy</span></a><a href="ai-visibility.html"><span data-l="tr">AI görünürlüğü (GEO)</span><span data-l="en">AI visibility (GEO)</span></a><a href="lead-generation.html">Lead generation</a></div><div class="msub"><span class="k mono">studio_</span><a href="identity.html"><span data-l="tr">Marka kimliği</span><span data-l="en">Brand identity</span></a><a href="websites.html"><span data-l="tr">Web &amp; SEO</span><span data-l="en">Websites &amp; SEO</span></a><a href="social-media.html"><span data-l="tr">Sosyal medya</span><span data-l="en">Social media</span></a></div></section><section><a class="big" href="work.html"><span data-l="tr">İşler</span><span data-l="en">Work</span></a></section><section><a class="big" href="resources.html"><span data-l="tr">Kaynaklar</span><span data-l="en">Resources</span></a><div class="msub"><a href="ai-blog.html">AI Blog</a><a href="resources.html#blog">Blog</a><a href="resources.html#guides"><span data-l="tr">Rehberler &amp; Checklist'ler</span><span data-l="en">Guides &amp; checklists</span></a><a href="resources.html#tools"><span data-l="tr">Araçlar</span><span data-l="en">Tools</span></a><a href="resources.html#glossary"><span data-l="tr">Sözlük</span><span data-l="en">Glossary</span></a></div></section><section><a class="big" href="about.html"><span data-l="tr">Hakkımızda</span><span data-l="en">About</span></a></section><section><a class="big" href="contact.html"><span data-l="tr">İletişim</span><span data-l="en">Contact</span></a></section></div><div class="mfoot"><a class="pill solid cta" href="contact.html"><span data-l="tr">Konuşalım</span><span data-l="en">Let&#x27;s talk</span> →</a></div></div>
 
 <script>
 (function(){
@@ -229,9 +189,9 @@
   var t=document.getElementById('mailtext');t.textContent=t.dataset.u+'@'+t.dataset.d;
 
   var NS='http://www.w3.org/2000/svg';
-  var logo=document.getElementById('logo'), ideas=logo.querySelector('.ideas'), fx=logo.querySelector('#fx');
+  var logo=document.getElementById('logo'), ideas=logo.querySelector('.ideas'), film=document.getElementById('ifilm');
   var finished=false;
-  function done(){if(finished)return;finished=true;root.classList.remove('intro');root.classList.add('ready');setTimeout(function(){root.classList.add('settled');var st=document.querySelector('.stage');if(st)st.parentNode.removeChild(st)},1500);rotate()}
+  function done(){if(finished)return;finished=true;root.classList.remove('intro');root.classList.add('ready');setTimeout(function(){root.classList.add('settled');if(film&&film.parentNode){try{film.pause();film.removeAttribute('src');film.load()}catch(e){}film.parentNode.removeChild(film)}},1500);rotate()}
   function wave(){
     var lis=document.querySelectorAll('.services li'),k=0;
     (function go(){var li=lis[k];li.classList.add('alt');setTimeout(function(){li.classList.remove('alt')},1500);k++;if(k<lis.length){setTimeout(go,520)}else{k=0;setTimeout(go,2800)}})();
@@ -243,108 +203,39 @@
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce||!logo.animate){done();return}
 
-  /* "ideas" becomes a different material every beat.
-     Each material is painted once, into its own layer, before the sequence starts. After that only opacity and
-     transform change — the compositor does that by itself, so a busy main thread (phones) cannot make it stutter. */
-  var B=224;
-  var LOOKS=[
-    {f:'Fredoka',w:700,s:1.1,fill:'#1C8FD9',stroke:'#1C8FD9',sw:22,flt:'fFur',hold:520},
-    {f:'Rubik Bubbles',s:1.06,fill:'#FF5FA2',flt:'fGloss'},
-    {f:'Fredoka',w:700,s:1.08,fill:'#000',flt:'fFrog'},
-    {f:'Syne',w:800,s:.78,fill:'url(#gChrome)',flt:'fGloss'},
-    {f:'Rubik Moonrocks',s:1.06,fill:'#8A867E',flt:'fStone'},
-    {f:'Bodoni Moda',st:'italic',w:700,s:1.38,fill:'#000',flt:'fWood'},
-    {f:'Fredoka',w:700,s:.98,fill:'#FF3B30',op:.9,flt:'fGloss'},
-    {f:'Syne',w:800,s:.76,fx:'extrude'},
-    {f:'Fraunces',st:'italic',w:900,s:1.28,fill:'url(#gGold)',flt:'fGloss'},
-    {f:'Instrument Serif',st:'italic',s:1.6,fill:'#000',flt:'fMarble'},
-    {f:'Monoton',s:1.02,fill:'#0B3BFF',flt:'fNeon',hold:240}
-  ];
-  function txt(L,dx,dy,fill,extra){
-    var e=document.createElementNS(NS,'text');
-    e.textContent='ideas';
-    e.setAttribute('x',444+(dx||0));e.setAttribute('y',dy||0);
-    e.setAttribute('font-family','"'+L.f+'"');e.setAttribute('font-size',B*L.s);
-    e.setAttribute('font-weight',L.w||400);e.setAttribute('font-style',L.st||'normal');
-    e.setAttribute('fill',fill);e.setAttribute('text-rendering','geometricPrecision');
-    if(extra)for(var k in extra)e.setAttribute(k,extra[k]);
-    return e;
-  }
-  var coarse=window.matchMedia&&matchMedia('(pointer:coarse)').matches;
-  var stage=document.createElement('div');stage.className='stage';stage.setAttribute('aria-hidden','true');
-  var layers=LOOKS.map(function(L){
-    var d=document.createElement('div'),s=document.createElementNS(NS,'svg');
-    d.className='lk';s.setAttribute('viewBox','5 -172 932 194');
-    if(L.fx==='extrude'){
-      for(var k=16;k>=1;k--){var c=Math.round(11+k*3.2);s.appendChild(txt(L,k*2.4,k*2.4,k>13?'#0B3BFF':'rgb('+c+','+c+','+(c+40)+')'))}
-      s.appendChild(txt(L,0,0,'#fff',{stroke:'#111','stroke-width':3}));
-    }else{
-      var ex={};
-      if(L.stroke){ex.stroke=L.stroke;ex['stroke-width']=L.sw||2;ex['stroke-linejoin']='round'}
-      if(L.flt)ex.filter='url(#'+L.flt+')';
-      if(L.op)ex.opacity=L.op;
-      s.appendChild(txt(L,0,0,L.fill,ex));
-    }
-    d.appendChild(s);stage.appendChild(d);return d;
-  });
-  /* one timeline for the whole sequence: each layer knows when it comes in and when it leaves */
-  var T=[],END=0;LOOKS.forEach(function(L){T.push(END);END+=L.hold||185});
-  layers.forEach(function(d,i){
-    var last=i===layers.length-1;
-    d.style.animationDelay=T[i]+'ms,'+(last?END:T[i+1])+'ms';
-    d.style.animationDuration='170ms,'+(last?260:120)+'ms';
-  });
-
+  /* "ideas" flows from one real material into the next: a short pre-rendered film (60 fps) that plays while the page loads.
+     It sits exactly where the logo's own "ideas" is, under the live "net_". Its last frame is the flat logo lettering,
+     so the real logo takes over without a visible change and flies home. Nothing waits for fonts, nothing is drawn by script. */
+  var FX=400, FY=-250, FW=840, FH=350;          /* the film's frame in the logo's own units (logo viewBox: 5 -172 932 194) */
   function place(){
     var r=logo.getBoundingClientRect();
-    /* the widest "ideas" looks run ~30% past the logo, so size and centre for that */
+    /* the film runs ~30% past the logo on the right, so size and centre for that */
     var target=Math.min(innerWidth*0.66,1000), s=target/r.width;
     var dx=innerWidth/2-target*0.14-(r.left+r.width/2), dy=innerHeight/2-(r.top+r.height/2);
     return 'translate('+dx+'px,'+dy+'px) scale('+s+')';
   }
-  var laidW=0;
   function lay(){
-    var r=logo.getBoundingClientRect();
-    stage.style.left=r.left+'px';stage.style.top=r.top+'px';
-    if(Math.abs(r.width-laidW)<.5)return;
-    laidW=r.width;
-    layers.forEach(function(d){var s=d.firstChild;s.setAttribute('width',r.width);s.setAttribute('height',r.height);d.style.fontSize=(14*r.width/932).toFixed(2)+'px'});
+    var r=logo.getBoundingClientRect(), u=r.width/932;
+    film.style.width=(FW*u).toFixed(2)+'px';film.style.height=(FH*u).toFixed(2)+'px';
+    film.style.transform='translate3d('+(r.left+(FX-5)*u).toFixed(2)+'px,'+(r.top+(FY+172)*u).toFixed(2)+'px,0)';
   }
-  var from=place();
+  var from=place(), timer, guard, landed=false;
   logo.style.willChange='transform,opacity';
   logo.style.transform=from;
-  logo.style.opacity=0;
   ideas.style.opacity=0;
-  document.body.appendChild(stage);
   lay();
+  root.classList.add('placed');
+  /* "net_" and the film's first frame (inlined in the page) are there from the first paint */
+  logo.animate([{opacity:0},{opacity:1}],{duration:220,easing:'ease-out'});
+  film.style.transition='none';film.style.opacity=1;
+  if(film.animate)film.animate([{opacity:0},{opacity:1}],{duration:220,easing:'ease-out'});
 
-  var loads=LOOKS.map(function(L){return document.fonts?document.fonts.load((L.st||'normal')+' '+(L.w||400)+' 100px "'+L.f+'"','ideas'):null});
-  var fonts=new Promise(function(res){Promise.all(loads).then(res,res);setTimeout(res,1800)});
-  /* paint all the looks once while nothing is moving, then give the browser two frames to finish */
-  var prep=fonts.then(function(){return new Promise(function(res){
-    stage.classList.add('warm');
-    requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(function(){requestAnimationFrame(res)},coarse?140:60)})});
-  })});
-
-  var timer, shown=false;
-  function show(){
-    if(shown||finished)return;shown=true;
-    logo.style.opacity=1;
-    logo.animate(coarse?[{opacity:0},{opacity:1}]:[{opacity:0,filter:'blur(8px)'},{opacity:1,filter:'blur(0)'}],{duration:450,easing:'ease-out'});
-  }
-  setTimeout(show,320);                       /* "net_" never waits long for the fonts */
-  prep.then(function(){
-    if(finished)return;
-    show();
-    stage.classList.remove('warm');stage.classList.add('go');
-    timer=setTimeout(land,END);
-  });
   function land(){
-    if(finished)return;
-    /* land on the real logo artwork: a soft cross-fade, no jump */
+    if(finished||landed)return;landed=true;clearTimeout(timer);clearTimeout(guard);
     ideas.style.opacity=1;
-    ideas.animate([{opacity:0},{opacity:1}],{duration:320,easing:'ease-out'});
-    timer=setTimeout(fly,420);
+    ideas.animate([{opacity:0},{opacity:1}],{duration:140,easing:'linear'});
+    film.style.transition='opacity .14s linear .06s';film.style.opacity=0;
+    timer=setTimeout(fly,230);
   }
   function fly(){
     if(finished)return;
@@ -353,18 +244,37 @@
     a.onfinish=function(){logo.style.willChange='auto'};
     setTimeout(done,420);
   }
+  var playing=null;
+  try{playing=film.getAttribute('src')?film.play():null}catch(e){}
+  if(!playing||!playing.then){timer=setTimeout(land,700)}
+  else{
+    playing.catch(function(){land()});          /* autoplay not allowed (e.g. low-power mode): go to the logo */
+    film.addEventListener('ended',land);
+    film.addEventListener('error',land);
+    /* a very slow line must not keep the page waiting */
+    guard=setTimeout(function(){if(film.currentTime<.05)land()},3200);
+    timer=setTimeout(land,8500);
+  }
   /* tap, scroll or key skips the intro */
   function skip(){
     if(finished)return;
-    clearTimeout(timer);
-    if(stage.parentNode)stage.parentNode.removeChild(stage);
+    clearTimeout(timer);clearTimeout(guard);landed=true;
+    try{film.pause()}catch(e){}
+    film.style.transition='none';film.style.opacity=0;
     ideas.getAnimations().concat(logo.getAnimations()).forEach(function(a){a.cancel()});
     ideas.style.opacity=1;logo.style.opacity=1;
     logo.style.transform='';logo.style.willChange='auto';done();
   }
   addEventListener('keydown',skip,{once:true});
   addEventListener('wheel',skip,{once:true,passive:true});
-  addEventListener('pointerdown',skip,{once:true});
+  /* the tap that skips must not also follow a link that is still hidden under the intro */
+  addEventListener('pointerdown',function(){
+    if(finished)return;
+    var stop=function(e){e.preventDefault();e.stopPropagation()};
+    addEventListener('click',stop,{capture:true,once:true});
+    setTimeout(function(){removeEventListener('click',stop,true)},600);
+    skip();
+  },{once:true});
   addEventListener('resize',function(){if(!finished&&logo.style.transform){logo.style.transform='';from=place();logo.style.transform=from;lay()}});
 })();
 </script>
@@ -390,17 +300,6 @@
   /* wait for the intro to finish, so the film never competes with it for the network */
   if(root.classList.contains('ready'))init();
   else{var mo=new MutationObserver(function(){if(root.classList.contains('ready')){mo.disconnect();setTimeout(init,600)}});mo.observe(root,{attributes:true,attributeFilter:['class']})}
-})();
-</script>
-<script>
-(function(){
-  var m=document.getElementById('mnav'),o=document.getElementById('mopen'),c=document.getElementById('mclose'),r=document.documentElement;
-  if(!m||!o)return;
-  function open(){m.hidden=false;r.classList.add('mopen');o.setAttribute('aria-expanded','true');c.focus()}
-  function close(){m.hidden=true;r.classList.remove('mopen');o.setAttribute('aria-expanded','false');o.focus()}
-  o.addEventListener('click',open);c.addEventListener('click',close);
-  m.addEventListener('click',function(e){if(e.target.closest('a'))close()});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!m.hidden)close()});
 })();
 </script>
 </body>
