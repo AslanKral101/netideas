@@ -51,6 +51,16 @@
   html.intro .topline{opacity:0}
   @media (max-width:700px){#logo{height:22px}.dock{height:auto;flex-wrap:wrap;padding-top:10px;padding-bottom:0;row-gap:4px}.nav{order:3;width:100%;margin:0;gap:20px;overflow-x:auto}.nav a{font-size:15px;padding:10px 0}main{padding-top:calc(142px + 32px)}.tl-r{display:none}}
 
+  /* intro: every "ideas" material is its own pre-painted layer; only opacity and transform ever change */
+  .stage{position:fixed;left:0;top:0;z-index:32;pointer-events:none}
+  .lk{position:absolute;left:0;top:0;opacity:0;will-change:opacity,transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+  .lk svg{display:block;overflow:visible}
+  .stage.warm .lk{opacity:.002}
+  .stage.go .lk{animation:lkin .17s cubic-bezier(.2,.8,.2,1) both,lkout .12s ease-out forwards}
+  @keyframes lkin{from{opacity:0;transform:translate3d(0,1em,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+  @keyframes lkout{from{opacity:1}to{opacity:0}}
+  html:not(.settled) .dock{-webkit-backdrop-filter:none;backdrop-filter:none}
+
   .veil{position:fixed;inset:0;z-index:20;background:#fff;pointer-events:none;transition:opacity .8s cubic-bezier(.7,0,.2,1)}
   html:not(.intro) .veil{opacity:0}
 
@@ -73,6 +83,20 @@
   .services a:hover .w .a,.services a:focus-visible .w .a{opacity:0}
   .services a:hover .w .b,.services a:focus-visible .w .b{opacity:1}
   @media (max-width:760px){.ww,html.tr .ww{grid-template-columns:1fr;justify-content:start;font-size:clamp(34px,10vw,52px)}.we{padding-bottom:.2em}}
+
+  /* the eyes: a film that sits in the white of the page */
+  .seen{display:flex;flex-direction:column;align-items:center;margin-top:clamp(72px,11vw,150px)}
+  .seen .kick{position:relative;z-index:1;margin:0;color:var(--muted)}
+  .seen .kick b{color:var(--blue);font-weight:500}
+  .eyes{position:relative;width:min(1320px,100%);aspect-ratio:16/9;margin-top:-6%;background:#fff}
+  .film{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;background:#fff;pointer-events:none;
+    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 5%,#000 95%,transparent 100%);-webkit-mask-composite:source-in;
+    mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 5%,#000 95%,transparent 100%);mask-composite:intersect}
+  .seen h2{position:relative;z-index:1;margin:-12% 0 0;max-width:13.5em;font-weight:700;font-size:clamp(30px,5.9vw,84px);line-height:1.02;letter-spacing:-.055em;text-align:center;text-wrap:balance}
+  .seen h2 em{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:600;letter-spacing:-.035em;color:var(--blue)}
+  .seen .sub{margin:22px 0 0;max-width:560px;font-size:clamp(17px,1.5vw,20px);line-height:1.45;color:var(--muted);text-align:center;text-wrap:balance}
+  .seen .pill{margin-top:30px;height:50px;padding:0 24px;font-weight:500;font-size:16px}
+  @media (max-width:760px){.eyes{width:calc(100% + 2 * var(--pad));margin-top:-4%}.seen h2{margin-top:-9%}}
 
   footer{padding:clamp(48px,8vw,96px) var(--pad) 40px;display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
   footer .tag{font-size:clamp(20px,2vw,26px);font-weight:500;line-height:1.25}
@@ -101,6 +125,16 @@
       <li class="rv" style="--i:6"><a href="ai-visibility.html"><span class="w"><span class="a"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span><span class="b" aria-hidden="true"><span data-l="tr">AI görünürlüğü</span><span data-l="en">AI visibility</span></span></span></a></li>
       <li class="rv" style="--i:7"><a href="lead-generation.html"><span class="w"><span class="a">Lead generation</span><span class="b" aria-hidden="true">Lead generation</span></span></a></li>
     </ul>
+  </section>
+
+  <section class="seen" id="seen" aria-labelledby="seen-h">
+    <p class="kick mono"><b>_</b>creative</p>
+    <div class="eyes">
+      <video class="film" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+    </div>
+    <h2 id="seen-h"><span data-l="en">We make sure the right eyes <em>see&nbsp;you.</em></span><span data-l="tr">Doğru gözlerin <em>sizi görmesi</em> için çalışıyoruz.</span></h2>
+    <p class="sub"><span data-l="en">Strategy, creative and media, made to be noticed by the people who buy.</span><span data-l="tr">Strateji, kreatif ve medya: satın alacak kişilerin sizi fark etmesi için.</span></p>
+    <a class="pill solid" href="contact.html"><span data-l="tr">Konuşalım</span><span data-l="en">Let's talk</span></a>
   </section>
 </main>
 
@@ -149,7 +183,7 @@
   var NS='http://www.w3.org/2000/svg';
   var logo=document.getElementById('logo'), ideas=logo.querySelector('.ideas'), fx=logo.querySelector('#fx');
   var finished=false;
-  function done(){if(finished)return;finished=true;root.classList.remove('intro');root.classList.add('ready');rotate()}
+  function done(){if(finished)return;finished=true;root.classList.remove('intro');root.classList.add('ready');setTimeout(function(){root.classList.add('settled');var st=document.querySelector('.stage');if(st)st.parentNode.removeChild(st)},1500);rotate()}
   function wave(){
     var lis=document.querySelectorAll('.services li'),k=0;
     (function go(){var li=lis[k];li.classList.add('alt');setTimeout(function(){li.classList.remove('alt')},1500);k++;if(k<lis.length){setTimeout(go,520)}else{k=0;setTimeout(go,2800)}})();
@@ -161,7 +195,9 @@
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce||!logo.animate){done();return}
 
-  /* "ideas" becomes a different material every beat */
+  /* "ideas" becomes a different material every beat.
+     Each material is painted once, into its own layer, before the sequence starts. After that only opacity and
+     transform change — the compositor does that by itself, so a busy main thread (phones) cannot make it stutter. */
   var B=224;
   var LOOKS=[
     {f:'Fredoka',w:700,s:1.1,fill:'#1C8FD9',stroke:'#1C8FD9',sw:22,flt:'fFur',hold:520},
@@ -186,25 +222,30 @@
     if(extra)for(var k in extra)e.setAttribute(k,extra[k]);
     return e;
   }
-  var EASE='cubic-bezier(.2,.8,.2,1)';
-  function fadeOut(nodes,ms){nodes.forEach(function(o){var a=o.animate([{opacity:1},{opacity:0}],{duration:ms,easing:'ease-out',fill:'forwards'});a.onfinish=function(){if(o.parentNode)o.parentNode.removeChild(o)}})}
-  function look(L){
-    var old=[].slice.call(fx.children);
-    var g=document.createElementNS(NS,'g');
+  var coarse=window.matchMedia&&matchMedia('(pointer:coarse)').matches;
+  var stage=document.createElement('div');stage.className='stage';stage.setAttribute('aria-hidden','true');
+  var layers=LOOKS.map(function(L){
+    var d=document.createElement('div'),s=document.createElementNS(NS,'svg');
+    d.className='lk';s.setAttribute('viewBox','5 -172 932 194');
     if(L.fx==='extrude'){
-      for(var k=16;k>=1;k--){var c=Math.round(11+k*3.2);g.appendChild(txt(L,k*2.4,k*2.4,k>13?'#0B3BFF':'rgb('+c+','+c+','+(c+40)+')'))}
-      g.appendChild(txt(L,0,0,'#fff',{stroke:'#111','stroke-width':3}));
+      for(var k=16;k>=1;k--){var c=Math.round(11+k*3.2);s.appendChild(txt(L,k*2.4,k*2.4,k>13?'#0B3BFF':'rgb('+c+','+c+','+(c+40)+')'))}
+      s.appendChild(txt(L,0,0,'#fff',{stroke:'#111','stroke-width':3}));
     }else{
       var ex={};
       if(L.stroke){ex.stroke=L.stroke;ex['stroke-width']=L.sw||2;ex['stroke-linejoin']='round'}
       if(L.flt)ex.filter='url(#'+L.flt+')';
       if(L.op)ex.opacity=L.op;
-      g.appendChild(txt(L,0,0,L.fill,ex));
+      s.appendChild(txt(L,0,0,L.fill,ex));
     }
-    fx.appendChild(g);
-    g.animate([{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'}],{duration:170,easing:EASE});
-    fadeOut(old,120);
-  }
+    d.appendChild(s);stage.appendChild(d);return d;
+  });
+  /* one timeline for the whole sequence: each layer knows when it comes in and when it leaves */
+  var T=[],END=0;LOOKS.forEach(function(L){T.push(END);END+=L.hold||185});
+  layers.forEach(function(d,i){
+    var last=i===layers.length-1;
+    d.style.animationDelay=T[i]+'ms,'+(last?END:T[i+1])+'ms';
+    d.style.animationDuration='170ms,'+(last?260:120)+'ms';
+  });
 
   function place(){
     var r=logo.getBoundingClientRect();
@@ -213,30 +254,52 @@
     var dx=innerWidth/2-target*0.14-(r.left+r.width/2), dy=innerHeight/2-(r.top+r.height/2);
     return 'translate('+dx+'px,'+dy+'px) scale('+s+')';
   }
+  var laidW=0;
+  function lay(){
+    var r=logo.getBoundingClientRect();
+    stage.style.left=r.left+'px';stage.style.top=r.top+'px';
+    if(Math.abs(r.width-laidW)<.5)return;
+    laidW=r.width;
+    layers.forEach(function(d){var s=d.firstChild;s.setAttribute('width',r.width);s.setAttribute('height',r.height);d.style.fontSize=(14*r.width/932).toFixed(2)+'px'});
+  }
   var from=place();
+  logo.style.willChange='transform,opacity';
   logo.style.transform=from;
+  logo.style.opacity=0;
   ideas.style.opacity=0;
-  look(LOOKS[0]);
-  logo.animate([{opacity:0,filter:'blur(8px)'},{opacity:1,filter:'blur(0)'}],{duration:450,easing:'ease-out'});
+  document.body.appendChild(stage);
+  lay();
 
   var loads=LOOKS.map(function(L){return document.fonts?document.fonts.load((L.st||'normal')+' '+(L.w||400)+' 100px "'+L.f+'"','ideas'):null});
-  var ready=new Promise(function(res){Promise.all(loads).then(res,res);setTimeout(res,1200)});
+  var fonts=new Promise(function(res){Promise.all(loads).then(res,res);setTimeout(res,1800)});
+  /* paint all the looks once while nothing is moving, then give the browser two frames to finish */
+  var prep=fonts.then(function(){return new Promise(function(res){
+    stage.classList.add('warm');
+    requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(function(){requestAnimationFrame(res)},coarse?140:60)})});
+  })});
 
-  var timer, i=0;
-  ready.then(function(){timer=setTimeout(step,LOOKS[0].hold)});
-  function step(){
+  var timer, shown=false;
+  function show(){
+    if(shown||finished)return;shown=true;
+    logo.style.opacity=1;
+    logo.animate(coarse?[{opacity:0},{opacity:1}]:[{opacity:0,filter:'blur(8px)'},{opacity:1,filter:'blur(0)'}],{duration:450,easing:'ease-out'});
+  }
+  setTimeout(show,320);                       /* "net_" never waits long for the fonts */
+  prep.then(function(){
     if(finished)return;
-    i++;
-    if(i<LOOKS.length){look(LOOKS[i]);timer=setTimeout(step,LOOKS[i].hold||185);return}
+    show();
+    stage.classList.remove('warm');stage.classList.add('go');
+    timer=setTimeout(land,END);
+  });
+  function land(){
+    if(finished)return;
     /* land on the real logo artwork: a soft cross-fade, no jump */
     ideas.style.opacity=1;
     ideas.animate([{opacity:0},{opacity:1}],{duration:320,easing:'ease-out'});
-    fadeOut([].slice.call(fx.children),260);
     timer=setTimeout(fly,420);
   }
   function fly(){
     if(finished)return;
-    logo.style.willChange='transform';
     var a=logo.animate([{transform:from},{transform:'none'}],{duration:950,easing:'cubic-bezier(.65,0,.25,1)'});
     logo.style.transform='';
     a.onfinish=function(){logo.style.willChange='auto'};
@@ -246,14 +309,39 @@
   function skip(){
     if(finished)return;
     clearTimeout(timer);
-    while(fx.firstChild)fx.removeChild(fx.firstChild);
-    ideas.style.opacity=1;logo.getAnimations().forEach(function(a){a.cancel()});
-    logo.style.transform='';done();
+    if(stage.parentNode)stage.parentNode.removeChild(stage);
+    ideas.getAnimations().concat(logo.getAnimations()).forEach(function(a){a.cancel()});
+    ideas.style.opacity=1;logo.style.opacity=1;
+    logo.style.transform='';logo.style.willChange='auto';done();
   }
   addEventListener('keydown',skip,{once:true});
   addEventListener('wheel',skip,{once:true,passive:true});
   addEventListener('pointerdown',skip,{once:true});
-  addEventListener('resize',function(){if(!finished&&logo.style.transform){logo.style.transform='';from=place();logo.style.transform=from}});
+  addEventListener('resize',function(){if(!finished&&logo.style.transform){logo.style.transform='';from=place();logo.style.transform=from;lay()}});
+})();
+</script>
+<script>
+/* the eyes film: loads when it is near, starts from its first frame when it scrolls into view */
+(function(){
+  var film=document.querySelector('.film');if(!film)return;
+  var root=document.documentElement;
+  var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function poster(){film.poster='eyes-poster.jpg'}
+  function init(){
+    if(still||!('IntersectionObserver' in window)){poster();return}
+    var src=(window.matchMedia&&matchMedia('(max-width:760px)').matches)?'eyes-720.mp4':'eyes-1080.mp4', loaded=false;
+    film.muted=true;
+    new IntersectionObserver(function(es,io){es.forEach(function(e){if(e.isIntersecting&&!loaded){loaded=true;film.src=src;film.load();io.disconnect()}})},{rootMargin:'900px 0px'}).observe(film);
+    new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.intersectionRatio>=.3){
+        if(film.paused&&loaded){try{film.currentTime=0}catch(x){}var p=film.play();if(p&&p.catch)p.catch(poster)}
+      }else if(!e.isIntersecting){film.pause()}
+    })},{threshold:[0,.3]}).observe(film);
+    film.addEventListener('canplay',function(){var r=film.getBoundingClientRect();if(film.paused&&r.top<innerHeight*.75&&r.bottom>innerHeight*.25){var p=film.play();if(p&&p.catch)p.catch(poster)}});
+  }
+  /* wait for the intro to finish, so the film never competes with it for the network */
+  if(root.classList.contains('ready'))init();
+  else{var mo=new MutationObserver(function(){if(root.classList.contains('ready')){mo.disconnect();setTimeout(init,600)}});mo.observe(root,{attributes:true,attributeFilter:['class']})}
 })();
 </script>
 </body>
